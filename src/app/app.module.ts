@@ -11,11 +11,16 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import { AdvancedSearchComponent } from './components/advanced-search/advanced-search.component';
+import { SimpleSearchComponent } from './components/simple-search/simple-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FacetChipsPickerComponent
+    FacetChipsPickerComponent,
+    AdvancedSearchComponent,
+    SimpleSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatChipsModule,
     MatIconModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

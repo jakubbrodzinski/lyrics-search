@@ -1,5 +1,5 @@
 <mat-form-field class="chip-list">
-  <mat-chip-list #chipList aria-label="Fruit selection">
+  <mat-chip-list #chipList aria-label="Facet selection">
     <mat-chip
       *ngFor="let facet of pickedChips"
       selectable="true"
@@ -9,7 +9,7 @@
       <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
     </mat-chip>
     <input
-      placeholder="New fruit..."
+      placeholder="New facet"
       #facetInput
       [formControl]="filterControl"
       [matAutocomplete]="auto"

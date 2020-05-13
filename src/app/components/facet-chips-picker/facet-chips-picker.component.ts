@@ -13,6 +13,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 })
 export class FacetChipsPickerComponent implements OnChanges {
   pickedChips: FacetEntity[] = [];
+  availableChips: FacetEntity[] = [];
   @Input()
   allAvailable: FacetEntity[];
   @Input()
@@ -21,7 +22,7 @@ export class FacetChipsPickerComponent implements OnChanges {
   onChipsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  private refreshAutoComplete$ = new Subject<boolean>();
+  private refreshAutoComplete$ = new Subject<void>();
 
   filterControl: FormControl = new FormControl();
   filteredNotPickedFacets$: Observable<FacetEntity[]>;
@@ -36,50 +37,56 @@ export class FacetChipsPickerComponent implements OnChanges {
       map(arr => arr[0]),
       map<string, FacetEntity[]>((filter: string | null) => {
         console.log('filter by: ' + filter)
-        return filter ? this._filter(filter) : this.allAvailable
+        return filter ? this._filter(filter) : this.availableChips
       })
     );
   }
 
   private _filter(value: string): FacetEntity[] {
     const filterValue = value.toLowerCase();
-    return this.allAvailable.filter(facet => facet.key.toLowerCase().includes(filterValue));
+    return this.availableChips.filter(facet => facet.key.toLowerCase().includes(filterValue));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const areChipsAlreadyPicked = changes.pickedOnStart && changes.pickedOnStart.currentValue.length;
-    if (areChipsAlreadyPicked && changes.allAvailable.currentValue) {
-      let pickedOnStart = [];
+    console.log(changes);
+    if (this.allAvailable && this.pickedOnStart && this.pickedOnStart.length) {
+      console.log("IMIN2")
+      let picked = [];
       let available = [];
       this.allAvailable.forEach(facet => {
         if (this.pickedOnStart.includes(facet.key))
-          pickedOnStart.push(facet);
+          picked.push(facet);
         else
           available.push(facet);
       })
-      this.pickedChips = pickedOnStart;
-      this.allAvailable = available;
+      this.pickedChips = picked;
+      this.availableChips = available;
+    }else if(this.allAvailable){
+      this.availableChips = this.allAvailable.slice();
     }
-    this.refreshAutoComplete$.next(true);
+
+    if (changes.pickedOnStart || changes.allAvailable) {
+      this.refreshAutoComplete$.next();
+    }
   }
 
   removeChip(removed: FacetEntity) {
     this.pickedChips = this.pickedChips
       .filter(picked => picked.key !== removed.key);
-    this.allAvailable.push(removed);
+    this.availableChips.push(removed);
     this.emitCurrentValues();
   }
 
   onSelectedNewChip(selected: MatAutocompleteSelectedEvent) {
     const pickedFacet: string = selected.option.value;
     const temp = [];
-    this.allAvailable.forEach(f => {
+    this.availableChips.forEach(f => {
       if (f.key !== pickedFacet)
         temp.push(f);
       else
         this.pickedChips.push(f);
     });
-    this.allAvailable = temp;
+    this.availableChips = temp;
     this.filterInput.nativeElement.value = '';
     this.filterControl.setValue(null);
     this.emitCurrentValues();

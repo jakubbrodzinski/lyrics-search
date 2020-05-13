@@ -1,0 +1,7 @@
+<mat-form-field class=query-form>
+  <mat-label>Query</mat-label>
+  <input matInput placeholder="Query" [formControl]="searchFormControl">
+</mat-form-field>
+<div>
+  <button mat-raised-button (click)="searchClick()">Search</button>
+</div>

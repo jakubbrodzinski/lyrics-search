@@ -33,7 +33,7 @@ export class ElasticService {
         unique_facet: {
           terms: {
             field: path,
-            size: 2147483647,
+            size: 15,//size: 2147483647,
             order: {
               _key: asc ? "asc" : "desc"
             }

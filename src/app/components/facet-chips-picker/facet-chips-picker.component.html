@@ -1,0 +1,24 @@
+<mat-form-field class="chip-list">
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip
+      *ngFor="let facet of pickedChips"
+      selectable="true"
+      removable="true"
+      (removed)="removeChip(facet)">
+      {{facet.key}}
+      <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="New fruit..."
+      #facetInput
+      [formControl]="filterControl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectedNewChip($event)">
+    <mat-option *ngFor="let facet of filteredNotPickedFacets$ | async" [value]="facet.key">
+      {{facet.key}} ({{facet.doc_count}})
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

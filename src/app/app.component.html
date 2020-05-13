@@ -316,7 +316,9 @@
 </div>
 
 <div class="content" role="main">
-
+  <div>
+    <app-facet-chips-picker [allAvailable]="authors" [pickedOnStart]="authors2" (onChipsChange)="log($event)"></app-facet-chips-picker>
+  </div>
   <!-- Highlight Card -->
   <div class="card highlight-card card-small">
 

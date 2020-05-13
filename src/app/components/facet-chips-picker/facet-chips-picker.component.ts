@@ -12,7 +12,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
   styleUrls: ['./facet-chips-picker.component.scss']
 })
 export class FacetChipsPickerComponent implements OnChanges {
-  pickedChips: FacetEntity[];
+  pickedChips: FacetEntity[] = [];
   @Input()
   allAvailable: FacetEntity[];
   @Input()
@@ -47,8 +47,8 @@ export class FacetChipsPickerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.pickedOnStart.currentValue && changes.pickedOnStart.currentValue.length && changes.allAvailable.currentValue) {
-      this.refreshAutoComplete$.next(true);
+    const areChipsAlreadyPicked = changes.pickedOnStart && changes.pickedOnStart.currentValue.length;
+    if (areChipsAlreadyPicked && changes.allAvailable.currentValue) {
       let pickedOnStart = [];
       let available = [];
       this.allAvailable.forEach(facet => {
@@ -60,6 +60,7 @@ export class FacetChipsPickerComponent implements OnChanges {
       this.pickedChips = pickedOnStart;
       this.allAvailable = available;
     }
+    this.refreshAutoComplete$.next(true);
   }
 
   removeChip(removed: FacetEntity) {

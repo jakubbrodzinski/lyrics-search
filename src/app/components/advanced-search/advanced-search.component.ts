@@ -1,20 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FacetType} from "../../models/facet-type";
 import {Observable} from "rxjs";
 import {FacetEntity} from "../../models/facet-entity";
 import {ElasticService} from "../../services/elastic.service";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
+import {QueryParams} from "../../models/query-params";
+import {filter, map} from "rxjs/operators";
+import {QueryResult} from "../../models/query-result";
 
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
   styleUrls: ['./advanced-search.component.scss']
 })
-export class AdvancedSearchComponent {
-  PARAMS = {
-    GENRES: 'genres', QUERY: 'query', AUTHORS: ' authors', ALBUMS: 'albums'
-  }
+export class AdvancedSearchComponent implements OnInit {
   queryFormControl: FormControl = new FormControl();
   ChipChange = FacetType;
 
@@ -30,8 +30,19 @@ export class AdvancedSearchComponent {
   onStartAlbums: string[] = [];
   pickedAlbums: string[] = [];
 
+  queryResults: QueryResult[] = [];
+
   constructor(private elasticService: ElasticService, private router: Router, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
     this.route.queryParamMap.subscribe(qParamMap => this.handleQueryParamMapChange(qParamMap))
+    this.route.data.pipe(
+      filter<Data>(data => data['queryResults']),
+      map<Data, QueryResult[]>(data => data['queryResults'])
+    ).subscribe(qResults => {
+      this.queryResults = qResults;
+    });
 
     this.genres$ = this.elasticService.getFacetGenres();
     this.authors$ = this.elasticService.getFacetAuthors();
@@ -39,19 +50,19 @@ export class AdvancedSearchComponent {
   }
 
   private handleQueryParamMapChange(paramMap: ParamMap) {
-    if (paramMap.has(this.PARAMS.QUERY)) {
-      this.queryFormControl.setValue(paramMap.get(this.PARAMS.QUERY))
+    if (paramMap.has(QueryParams.QUERY)) {
+      this.queryFormControl.setValue(paramMap.get(QueryParams.QUERY))
     }
-    if (paramMap.has(this.PARAMS.GENRES)) {
-      this.onStartGenres = paramMap.getAll(this.PARAMS.GENRES);
+    if (paramMap.has(QueryParams.GENRES)) {
+      this.onStartGenres = paramMap.getAll(QueryParams.GENRES);
       this.pickedGenres = this.onStartGenres;
     }
-    if (paramMap.has(this.PARAMS.AUTHORS)) {
-      this.onStartAuthors = paramMap.getAll(this.PARAMS.AUTHORS);
+    if (paramMap.has(QueryParams.AUTHORS)) {
+      this.onStartAuthors = paramMap.getAll(QueryParams.AUTHORS);
       this.pickedAuthors = this.onStartAuthors;
     }
-    if (paramMap.has(this.PARAMS.ALBUMS)) {
-      this.onStartAlbums = paramMap.getAll(this.PARAMS.ALBUMS);
+    if (paramMap.has(QueryParams.ALBUMS)) {
+      this.onStartAlbums = paramMap.getAll(QueryParams.ALBUMS);
       this.pickedAlbums = this.onStartAlbums;
     }
   }
@@ -72,13 +83,13 @@ export class AdvancedSearchComponent {
 
   doSomething() {
     const qParams = {};
-    qParams[this.PARAMS.QUERY] = this.queryFormControl.value
-    if (this.onStartAlbums.length)
-      qParams[this.PARAMS.ALBUMS] = this.pickedAlbums;
-    if (this.onStartGenres.length)
-      qParams[this.PARAMS.GENRES] = this.pickedGenres;
-    if (this.onStartAuthors.length)
-      qParams[this.PARAMS.AUTHORS] = this.pickedAuthors;
+    qParams[QueryParams.QUERY] = this.queryFormControl.value
+    if (this.pickedAlbums.length)
+      qParams[QueryParams.ALBUMS] = this.pickedAlbums;
+    if (this.pickedGenres.length)
+      qParams[QueryParams.GENRES] = this.pickedGenres;
+    if (this.pickedAuthors.length)
+      qParams[QueryParams.AUTHORS] = this.pickedAuthors;
 
     this.router.navigate([], {
       relativeTo: this.route,

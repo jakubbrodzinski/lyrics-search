@@ -50,7 +50,6 @@ export class FacetChipsPickerComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if (this.allAvailable && this.pickedOnStart && this.pickedOnStart.length) {
-      console.log("IMIN2")
       let picked = [];
       let available = [];
       this.allAvailable.forEach(facet => {

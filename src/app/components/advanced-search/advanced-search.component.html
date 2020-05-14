@@ -312,11 +312,13 @@
         <app-facet-chips-picker [allAvailable]="genres$ | async" [pickedOnStart]="onStartGenres"
                                 (onChipsChange)="chipsChanges($event,ChipChange.GENRES)"></app-facet-chips-picker>
       </div>
-    </div>
 
-    <div>
       <button mat-raised-button (click)="doSomething()">CLICK ME</button>
     </div>
-
+    <div>
+      <div *ngFor="let song of queryResults">
+        TITLE: {{song._source.title}}
+      </div>
+    </div>
   </div>
 </div>

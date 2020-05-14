@@ -14,6 +14,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import { AdvancedSearchComponent } from './components/advanced-search/advanced-search.component';
 import { SimpleSearchComponent } from './components/simple-search/simple-search.component';
+import {AdvancedSearchResolver} from "./resolvers/advanced-search-resolver";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { SimpleSearchComponent } from './components/simple-search/simple-search.
     ReactiveFormsModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [AdvancedSearchResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

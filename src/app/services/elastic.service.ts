@@ -4,6 +4,9 @@ import {from, Observable} from "rxjs";
 import {FacetEntity} from "../models/facet-entity";
 import {catchError, map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {Query} from "../models/query";
+import {QueryResult} from "../models/query-result";
+import {QueryUtils} from "../utils/query-utils";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,10 @@ export class ElasticService {
 
   getFacetAlbums(): Observable<FacetEntity[]> {
     return this.getAllUniqueValues('album.name', true);
+  }
+
+  getFilteredFacetAlbums(author: FacetEntity[], feats: FacetEntity[]): Observable<FacetEntity[]> {
+    return undefined;
   }
 
   private getAllUniqueValues(path: string, asc: boolean): Observable<FacetEntity[]> {
@@ -49,7 +56,16 @@ export class ElasticService {
     );
   }
 
-  getFilteredFacetAlbums(author: FacetEntity[], feats: FacetEntity[]): Observable<FacetEntity[]> {
-    return undefined;
+  searchForSongs(query: Query, pageSize: number, pageNumber: number): Observable<QueryResult[]> {
+    let elasticRequestBody = {};
+    if (!query.getText)
+      elasticRequestBody['_source'] = ["author", "album", "title", "date", "feats", "genres"];
+    elasticRequestBody['size'] = pageSize
+    elasticRequestBody['query'] = QueryUtils.convertToElasticQuery(query);
+    console.log(elasticRequestBody);
+    return this.http.post<any>(this.ES_URL, elasticRequestBody)
+      .pipe(map<any, QueryResult[]>(response => response.hits.hits));
   }
+
+
 }

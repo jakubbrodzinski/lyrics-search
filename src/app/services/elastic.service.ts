@@ -5,7 +5,7 @@ import {FacetEntity} from "../models/facet-entity";
 import {catchError, map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Query} from "../models/query";
-import {QueryResult} from "../models/query-result";
+import {PagedResults} from "../models/query-result";
 import {QueryUtils} from "../utils/query-utils";
 
 @Injectable({
@@ -56,7 +56,7 @@ export class ElasticService {
     );
   }
 
-  searchForSongs(query: Query, pageSize: number, pageNumber: number): Observable<QueryResult[]> {
+  searchForSongs(query: Query, pageSize: number, pageNumber: number): Observable<PagedResults> {
     let elasticRequestBody = {};
     if (!query.getText)
       elasticRequestBody['_source'] = ["author", "album", "title", "date", "feats", "genres"];
@@ -64,8 +64,13 @@ export class ElasticService {
     elasticRequestBody['query'] = QueryUtils.convertToElasticQuery(query);
     console.log(elasticRequestBody);
     return this.http.post<any>(this.ES_URL, elasticRequestBody)
-      .pipe(map<any, QueryResult[]>(response => response.hits.hits));
+      .pipe(map<any, PagedResults>(response => {
+        const hits = response.hits;
+        return {
+          total_size: hits.total.value,
+          max_score: hits.max_score,
+          results: hits.hits
+        }
+      }));
   }
-
-
 }

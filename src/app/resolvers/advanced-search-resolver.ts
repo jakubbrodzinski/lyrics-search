@@ -1,5 +1,5 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {QueryResult} from "../models/query-result";
+import {PagedResults} from "../models/query-result";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {ElasticService} from "../services/elastic.service";
@@ -7,11 +7,11 @@ import {Query} from "../models/query";
 import {QueryParams} from "../models/query-params";
 
 @Injectable()
-export class AdvancedSearchResolver implements Resolve<QueryResult[]> {
+export class AdvancedSearchResolver implements Resolve<PagedResults> {
   constructor(private elasticService: ElasticService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<QueryResult[]> | QueryResult[] {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PagedResults> | PagedResults {
     //TODO queryParam is required? if not redirect?
     const qParamMap = route.queryParamMap;
     const query: Query = {

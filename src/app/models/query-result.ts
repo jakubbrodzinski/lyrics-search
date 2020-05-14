@@ -1,3 +1,9 @@
+export interface PagedResults {
+  total_size: number;
+  max_score: number;
+  results: QueryResult[];
+}
+
 export interface QueryResult {
   _id: string;
   _score: number;
@@ -6,7 +12,7 @@ export interface QueryResult {
 
 interface Song {
   album: NameIdEntity;
-  authro: NameIdEntity;
+  author: NameIdEntity;
   title: string;
   date: string;
   feats: NameIdEntity[];

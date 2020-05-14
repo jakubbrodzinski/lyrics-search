@@ -7,7 +7,7 @@ import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {QueryParams} from "../../models/query-params";
 import {filter, map} from "rxjs/operators";
-import {QueryResult} from "../../models/query-result";
+import {PagedResults, QueryResult} from "../../models/query-result";
 
 @Component({
   selector: 'app-advanced-search',
@@ -39,9 +39,9 @@ export class AdvancedSearchComponent implements OnInit {
     this.route.queryParamMap.subscribe(qParamMap => this.handleQueryParamMapChange(qParamMap))
     this.route.data.pipe(
       filter<Data>(data => data['queryResults']),
-      map<Data, QueryResult[]>(data => data['queryResults'])
-    ).subscribe(qResults => {
-      this.queryResults = qResults;
+      map<Data, PagedResults>(data => data['queryResults'])
+    ).subscribe(pagedResults => {
+      this.queryResults = pagedResults.results;
     });
 
     this.genres$ = this.elasticService.getFacetGenres();

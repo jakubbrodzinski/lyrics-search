@@ -299,17 +299,17 @@
       </mat-form-field>
       <div>
 
-        <app-facet-chips-picker [allAvailable]="albums$ | async" [pickedOnStart]="onStartAlbums"
+        <app-facet-chips-picker [allAvailable]="albums" [pickedOnStart]="onStartAlbums"
                                 (onChipsChange)="chipsChanges($event,ChipChange.ALBUMS)"></app-facet-chips-picker>
       </div>
 
       <div>
-        <app-facet-chips-picker [allAvailable]="authors$ | async" [pickedOnStart]="onStartAuthors"
+        <app-facet-chips-picker [allAvailable]="authors" [pickedOnStart]="onStartAuthors"
                                 (onChipsChange)="chipsChanges($event,ChipChange.AUTHORS)"></app-facet-chips-picker>
       </div>
 
       <div>
-        <app-facet-chips-picker [allAvailable]="genres$ | async" [pickedOnStart]="onStartGenres"
+        <app-facet-chips-picker [allAvailable]="genres" [pickedOnStart]="onStartGenres"
                                 (onChipsChange)="chipsChanges($event,ChipChange.GENRES)"></app-facet-chips-picker>
       </div>
 

@@ -17,38 +17,25 @@ export class ElasticService {
   constructor(private http: HttpClient) {
   }
 
-  getFacetAuthors(): Observable<FacetEntity[]> {
-    return this.getAllUniqueValues('author.name', true);
+  getFacetAuthors(query: Query): Observable<FacetEntity[]> {
+    return this.getFilteredFacets(query, 'author.name');
   }
 
-  getFacetGenres(): Observable<FacetEntity[]> {
-    return this.getAllUniqueValues('genres', true);
+  getFacetGenres(query: Query): Observable<FacetEntity[]> {
+    return this.getFilteredFacets(query, 'genres');
   }
 
-  getFacetAlbums(): Observable<FacetEntity[]> {
-    return this.getAllUniqueValues('album.name', true);
+  getFacetAlbums(query: Query): Observable<FacetEntity[]> {
+    return this.getFilteredFacets(query, 'album.name');
   }
 
-  getFilteredFacetAlbums(author: FacetEntity[], feats: FacetEntity[]): Observable<FacetEntity[]> {
-    return undefined;
-  }
-
-  private getAllUniqueValues(path: string, asc: boolean): Observable<FacetEntity[]> {
-    return this.http.post<any>(this.ES_URL, {
-      size: 0,
-      aggs: {
-        unique_facet: {
-          terms: {
-            field: path,
-            size: 15,//size: 2147483647,
-            order: {
-              _key: asc ? "asc" : "desc"
-            }
-          }
-        }
-      }
-    }).pipe(
-      map<any, FacetEntity[]>(json => json.aggregations.unique_facet.buckets),
+  private getFilteredFacets(query: Query, path: string): Observable<FacetEntity[]> {
+    const facetQuery = {};
+    facetQuery['size'] = 0;
+    facetQuery['query'] = QueryUtils.convertToElasticQuery(query);
+    facetQuery['aggs'] = QueryUtils.createAggregationQuery('unique_facet', path);
+    return this.http.post<any>(this.ES_URL, facetQuery).pipe(
+      map<any, FacetEntity[]>(json => json.aggregations['unique_facet'].buckets),
       catchError(err => {
         console.log(err);
         return from([]);

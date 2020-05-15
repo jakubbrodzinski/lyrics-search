@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FacetType} from "../../models/facet-type";
-import {Observable} from "rxjs";
 import {FacetEntity} from "../../models/facet-entity";
 import {ElasticService} from "../../services/elastic.service";
 import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {QueryParams} from "../../models/query-params";
-import {filter, map} from "rxjs/operators";
-import {PagedResults, QueryResult} from "../../models/query-result";
+import {QueryResult} from "../../models/query-result";
 
 @Component({
   selector: 'app-advanced-search',
@@ -18,15 +16,15 @@ export class AdvancedSearchComponent implements OnInit {
   queryFormControl: FormControl = new FormControl();
   ChipChange = FacetType;
 
-  authors$: Observable<FacetEntity[]>;
+  authors: FacetEntity[];
   onStartAuthors: string[] = [];
   pickedAuthors: string[] = [];
 
-  genres$: Observable<FacetEntity[]>;
+  genres: FacetEntity[];
   onStartGenres: string[] = [];
   pickedGenres: string[] = [];
 
-  albums$: Observable<FacetEntity[]>;
+  albums: FacetEntity[];
   onStartAlbums: string[] = [];
   pickedAlbums: string[] = [];
 
@@ -37,16 +35,7 @@ export class AdvancedSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(qParamMap => this.handleQueryParamMapChange(qParamMap))
-    this.route.data.pipe(
-      filter<Data>(data => data['queryResults']),
-      map<Data, PagedResults>(data => data['queryResults'])
-    ).subscribe(pagedResults => {
-      this.queryResults = pagedResults.results;
-    });
-
-    this.genres$ = this.elasticService.getFacetGenres();
-    this.authors$ = this.elasticService.getFacetAuthors();
-    this.albums$ = this.elasticService.getFacetAlbums();
+    this.route.data.subscribe(data => this.handleDataChange(data));
   }
 
   private handleQueryParamMapChange(paramMap: ParamMap) {
@@ -65,6 +54,18 @@ export class AdvancedSearchComponent implements OnInit {
       this.onStartAlbums = paramMap.getAll(QueryParams.ALBUMS);
       this.pickedAlbums = this.onStartAlbums;
     }
+  }
+
+  private handleDataChange(data: Data) {
+    console.log(data);
+    if (data.authors)
+      this.authors = data.authors;
+    if (data.albums)
+      this.albums = data.albums;
+    if (data.genres)
+      this.genres = data.genres;
+    if (data.pagedResults)
+      this.queryResults = data.pagedResults.results;
   }
 
   chipsChanges($event: string[], type: FacetType) {

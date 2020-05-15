@@ -31,4 +31,16 @@ export class QueryUtils {
 
     return {bool: {must: mustBody}};
   }
+
+  static createAggregationQuery(qName: string, path: string): any {
+    const aggrQuery = {};
+    aggrQuery[qName] = {
+      terms: {
+        field: path,
+        size: 500,
+        order: {_key: 'asc'}
+      }
+    }
+    return aggrQuery;
+  }
 }

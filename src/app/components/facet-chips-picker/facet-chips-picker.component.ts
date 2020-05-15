@@ -1,8 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FacetEntity} from "../../models/facet-entity";
 import {FormControl} from "@angular/forms";
-import {combineLatest, Observable, Subject} from "rxjs";
-import {debounceTime, map, startWith} from "rxjs/operators";
+import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
+import {debounceTime, map, startWith, tap} from "rxjs/operators";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
@@ -22,18 +22,19 @@ export class FacetChipsPickerComponent implements OnChanges {
   onChipsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  private refreshAutoComplete$ = new Subject<void>();
+  private refreshAutoComplete$ = new BehaviorSubject<boolean>(true);
 
   filterControl: FormControl = new FormControl();
   filteredNotPickedFacets$: Observable<FacetEntity[]>;
   @ViewChild('facetInput') filterInput: ElementRef<HTMLInputElement>;
 
   constructor() {
-    const temp$ = this.filterControl.valueChanges.pipe(
+    const debouncedFilterChange$ = this.filterControl.valueChanges.pipe(
       startWith(<string>null),
       debounceTime(500)
     );
-    this.filteredNotPickedFacets$ = combineLatest([temp$, this.refreshAutoComplete$.asObservable()]).pipe(
+    const temp$ = this.refreshAutoComplete$.asObservable().pipe(tap(()=>console.log('something is happening')));
+    this.filteredNotPickedFacets$ = combineLatest([debouncedFilterChange$, temp$]).pipe(
       map(arr => arr[0]),
       map<string, FacetEntity[]>((filter: string | null) => {
         console.log('filter by: ' + filter)
@@ -65,7 +66,7 @@ export class FacetChipsPickerComponent implements OnChanges {
     }
 
     if (changes.pickedOnStart || changes.allAvailable) {
-      this.refreshAutoComplete$.next();
+      this.refreshAutoComplete$.next(true);
     }
   }
 

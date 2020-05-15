@@ -313,10 +313,11 @@
                                 (onChipsChange)="chipsChanges($event,ChipChange.GENRES)"></app-facet-chips-picker>
       </div>
 
-      <button mat-raised-button (click)="doSomething()">CLICK ME</button>
+      <button mat-raised-button (click)="updateParamsAndSearch()">CLICK ME</button>
     </div>
     <div>
-      <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"></app-results-list>
+      <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
+                        (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"></app-results-list>
     </div>
   </div>
 </div>

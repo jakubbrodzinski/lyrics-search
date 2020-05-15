@@ -6,6 +6,8 @@ import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {QueryParams} from "../../models/query-params";
 import {QueryResult} from "../../models/query-result";
+import {Page} from "../../models/page";
+import {Field, Sort} from "../../models/sort";
 
 @Component({
   selector: 'app-advanced-search',
@@ -29,7 +31,7 @@ export class AdvancedSearchComponent implements OnInit {
   pickedAlbums: string[] = [];
 
   queryResults: QueryResult[] = [];
-  queryResultsCount: number =0;
+  queryResultsCount: number = 0;
 
   constructor(private elasticService: ElasticService, private router: Router, private route: ActivatedRoute) {
   }
@@ -85,7 +87,7 @@ export class AdvancedSearchComponent implements OnInit {
     }
   }
 
-  doSomething() {
+  updateParamsAndSearch() {
     const qParams = {};
     qParams[QueryParams.QUERY] = this.queryFormControl.value
     if (this.pickedAlbums.length)
@@ -95,9 +97,27 @@ export class AdvancedSearchComponent implements OnInit {
     if (this.pickedAuthors.length)
       qParams[QueryParams.AUTHORS] = this.pickedAuthors;
 
-    this.router.navigate([], {
+    return this.changeQueryParams(qParams, '');
+  }
+
+  onPageChange(pageChange: Page) {
+    return this.changeQueryParams(pageChange, 'merge');
+  }
+
+  onSortChange(sortChange: Sort) {
+    if (sortChange.field === Field.NONE) {
+      const qParams = {field: null, direction: null};
+      return this.changeQueryParams(qParams, 'merge');
+    } else {
+      return this.changeQueryParams(sortChange, 'merge');
+    }
+  }
+
+  private changeQueryParams(newParams: any, strategy: 'merge' | 'preserve' | '') {
+    return this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: qParams
+      queryParams: newParams,
+      queryParamsHandling: strategy
     })
   }
 }

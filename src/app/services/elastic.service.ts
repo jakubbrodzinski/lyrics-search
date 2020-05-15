@@ -43,11 +43,17 @@ export class ElasticService {
     );
   }
 
-  searchForSongs(query: Query, pageSize: number, pageNumber: number): Observable<PagedResults> {
+  searchForSongs(query: Query, pageSize: number, offset: number, sortField ?: string, direction ?: string): Observable<PagedResults> {
     let elasticRequestBody = {};
     if (!query.getText)
       elasticRequestBody['_source'] = ["author", "album", "title", "date", "feats", "genres"];
-    elasticRequestBody['size'] = pageSize
+    elasticRequestBody['size'] = pageSize;
+    elasticRequestBody['from'] = offset;
+    if (sortField) {
+      const sortByCriterion = {};
+      sortByCriterion[sortField] = direction || 'asc';
+      elasticRequestBody['sort'] = [sortByCriterion];
+    }
     elasticRequestBody['query'] = QueryUtils.convertToElasticQuery(query);
     console.log(elasticRequestBody);
     return this.http.post<any>(this.ES_URL, elasticRequestBody)

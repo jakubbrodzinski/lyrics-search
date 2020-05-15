@@ -1,0 +1,24 @@
+<div>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</div>
+<div>
+  <button mat-raised-button type="button" (click)="sortBy(FieldSort.GENRE)">Gatunek</button>
+  <button mat-raised-button type="button" (click)="sortBy(FieldSort.AUTHOR)">Autor</button>
+  <button mat-raised-button type="button" (click)="sortBy(FieldSort.ALBUM)">Album</button>
+  <button mat-raised-button type="button" (click)="sortBy(FieldSort.TITLE)">Tytuł</button>
+  <button mat-raised-button type="button" (click)="sortBy(FieldSort.DATE)">Data</button>
+</div>
+<div>Current Page {{currentPage}} of {{possiblePages.length}} with size {{pageSize}}</div>
+<div>
+  <div>
+    <button mat-raised-button type="button" (click)="changePageSize(10)">10</button>
+    <button mat-raised-button type="button" (click)="changePageSize(25)">25</button>
+    <button mat-raised-button type="button" (click)="changePageSize(50)">50</button>
+  </div>
+  <ng-container *ngFor="let pageIndex of possiblePages">
+    <button mat-raised-button type="button" (click)="changePage(pageIndex)">{{pageIndex}}</button>
+  </ng-container>
+</div>
+<div>
+  <div *ngFor="let song of queryResults">
+    TITLE: {{song._source.title}}
+  </div>
+</div>

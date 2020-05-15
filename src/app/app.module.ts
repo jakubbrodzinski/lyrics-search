@@ -18,13 +18,15 @@ import {AdvancedSearchResolver} from "./resolvers/advanced-search-resolver";
 import {AlbumsResolver} from "./resolvers/albums-resolver";
 import {AuthorsResolver} from "./resolvers/authors-resolver";
 import {GenresResolver} from "./resolvers/genres-resolver";
+import { ResultsListComponent } from './components/results-list/results-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FacetChipsPickerComponent,
     AdvancedSearchComponent,
-    SimpleSearchComponent
+    SimpleSearchComponent,
+    ResultsListComponent
   ],
   imports: [
     BrowserModule,

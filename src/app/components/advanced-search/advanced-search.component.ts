@@ -29,6 +29,7 @@ export class AdvancedSearchComponent implements OnInit {
   pickedAlbums: string[] = [];
 
   queryResults: QueryResult[] = [];
+  queryResultsCount: number =0;
 
   constructor(private elasticService: ElasticService, private router: Router, private route: ActivatedRoute) {
   }
@@ -64,8 +65,10 @@ export class AdvancedSearchComponent implements OnInit {
       this.albums = data.albums;
     if (data.genres)
       this.genres = data.genres;
-    if (data.pagedResults)
+    if (data.pagedResults) {
       this.queryResults = data.pagedResults.results;
+      this.queryResultsCount = data.pagedResults.total_size;
+    }
   }
 
   chipsChanges($event: string[], type: FacetType) {

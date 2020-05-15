@@ -316,9 +316,7 @@
       <button mat-raised-button (click)="doSomething()">CLICK ME</button>
     </div>
     <div>
-      <div *ngFor="let song of queryResults">
-        TITLE: {{song._source.title}}
-      </div>
+      <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"></app-results-list>
     </div>
   </div>
 </div>

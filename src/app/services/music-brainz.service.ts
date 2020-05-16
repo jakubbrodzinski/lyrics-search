@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 })
 export class MusicBrainzService {
   private ARTIST_DETAILS_URL = 'http://musicbrainz.org/ws/2/artist';
-  private COVER_ARCHIVE_URL = '';
+  private COVER_ARCHIVE_URL = 'http://coverartarchive.org/release-group';
 
   constructor(private http: HttpClient) {
   }
@@ -22,8 +22,8 @@ export class MusicBrainzService {
     return this.http.get<Author>(`${this.ARTIST_DETAILS_URL}/${authorId}`, {params: httpParams})
   }
 
-  // check https://musicbrainz.org/doc/Cover_Art_Archive
-  getCoverImage(albumId: string) {
-
+  // check https://musicbrainz.org/doc/Cover_Art_Archive/API
+  getCoverImageURL(albumId: string) : string{
+    return `${this.COVER_ARCHIVE_URL}/${albumId}/front-500`;
   }
 }

@@ -20,7 +20,7 @@ interface Song {
   lyrics: string;
 }
 
-interface NameIdEntity {
+export interface NameIdEntity {
   name: string;
   id: string;
 }

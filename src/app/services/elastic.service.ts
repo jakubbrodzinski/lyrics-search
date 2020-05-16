@@ -5,8 +5,9 @@ import {FacetEntity} from "../models/facet-entity";
 import {catchError, map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Query} from "../models/query";
-import {PagedResults} from "../models/query-result";
+import {NameIdEntity, PagedResults, QueryResult} from "../models/query-result";
 import {QueryUtils} from "../utils/query-utils";
+import {FacetType} from "../models/facet-type";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,19 @@ export class ElasticService {
     );
   }
 
+  getFacetDetails(facetText: string, type: FacetType.ALBUMS | FacetType.AUTHORS) : Observable<any>{
+    const sourceField = type === FacetType.ALBUMS ? 'album' : 'author';
+    const key = type === FacetType.ALBUMS ? 'album.name' : 'author.name';
+    let elasticQuery = {};
+    elasticQuery['size'] = 1;
+    elasticQuery['_source'] = sourceField;
+    elasticQuery['query'] = {match: {}}
+    elasticQuery['query']['match'][key] = facetText;
+
+    return this.http.post<any>(this.ES_URL, elasticQuery)
+      .pipe(map<any, NameIdEntity>(response => response.hits.hits[0]._source[sourceField]));
+  }
+
   searchForSongs(query: Query, pageSize: number, offset: number, sortField ?: string, direction ?: string): Observable<PagedResults> {
     let elasticRequestBody = {};
     if (!query.getText)
@@ -65,5 +79,15 @@ export class ElasticService {
           results: hits.hits
         }
       }));
+  }
+
+  getSongBy_Id(_id: string): Observable<QueryResult> {
+    let elasticQuery = {};
+    elasticQuery['size'] = 1;
+    elasticQuery['query'] = {match: {}};
+    elasticQuery['query']['match']['_id'] = _id;
+
+    return this.http.post<any>(this.ES_URL, elasticQuery)
+      .pipe(map<any, QueryResult>(response => response.hits.hits[0]));
   }
 }

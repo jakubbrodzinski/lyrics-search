@@ -1,3 +1,3 @@
 export enum FacetType {
-  AUTHORS,ALBUMS, GENRES, DATE
+  AUTHORS,ALBUMS, GENRES
 }

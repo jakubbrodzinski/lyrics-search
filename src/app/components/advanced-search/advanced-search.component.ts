@@ -38,36 +38,39 @@ export class AdvancedSearchComponent implements OnInit {
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
 
+  startOffset: number;
+  startPageSize: number;
+
   constructor(private elasticService: ElasticService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(qParamMap => this.handleQueryParamMapChange(qParamMap))
+    this.handleSnapshotParamMap(this.route.snapshot.queryParamMap);
     this.route.data.subscribe(data => this.handleDataChange(data));
   }
 
-  private handleQueryParamMapChange(paramMap: ParamMap) {
-    if (paramMap.has(QueryParams.QUERY)) {
-      this.queryFormControl.setValue(paramMap.get(QueryParams.QUERY))
+  private handleSnapshotParamMap(snapshotParamMap: ParamMap) {
+    if (snapshotParamMap.has(QueryParams.QUERY)) {
+      this.queryFormControl.setValue(snapshotParamMap.get(QueryParams.QUERY))
     }
-    if (paramMap.has(QueryParams.GENRES)) {
-      this.onStartGenres = paramMap.getAll(QueryParams.GENRES);
+    if (snapshotParamMap.has(QueryParams.GENRES)) {
+      this.onStartGenres = snapshotParamMap.getAll(QueryParams.GENRES);
       this.pickedGenres = this.onStartGenres;
     }
-    if (paramMap.has(QueryParams.AUTHORS)) {
-      this.onStartAuthors = paramMap.getAll(QueryParams.AUTHORS);
+    if (snapshotParamMap.has(QueryParams.AUTHORS)) {
+      this.onStartAuthors = snapshotParamMap.getAll(QueryParams.AUTHORS);
       this.pickedAuthors = this.onStartAuthors;
     }
-    if (paramMap.has(QueryParams.ALBUMS)) {
-      this.onStartAlbums = paramMap.getAll(QueryParams.ALBUMS);
+    if (snapshotParamMap.has(QueryParams.ALBUMS)) {
+      this.onStartAlbums = snapshotParamMap.getAll(QueryParams.ALBUMS);
       this.pickedAlbums = this.onStartAlbums;
     }
-    if(paramMap.has(QueryParams.FROM)){
-      this.onStartMinDate= paramMap.get(QueryParams.FROM);
-    }
-    if(paramMap.has(QueryParams.TO)){
-      this.onStartMaxDate= paramMap.get(QueryParams.TO);
-    }
+    this.startPageSize = Number(snapshotParamMap.get('size') || 10);
+    this.startOffset = Number(snapshotParamMap.get('offset') || 0);
+    if (snapshotParamMap.has('from'))
+      this.onStartMinDate = snapshotParamMap.get('from');
+    if (snapshotParamMap.has('to'))
+      this.onStartMaxDate = snapshotParamMap.get('to');
   }
 
   private handleDataChange(data: Data) {
@@ -89,31 +92,25 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   chipsChanges($event: string[], type: FacetType) {
+    let key: QueryParams;
     switch (type) {
       case FacetType.GENRES:
         this.pickedGenres = $event;
+        key = QueryParams.GENRES;
         break;
       case FacetType.AUTHORS:
         this.pickedAuthors = $event;
+        key = QueryParams.AUTHORS;
         break;
       case FacetType.ALBUMS:
         this.pickedAlbums = $event;
+        key = QueryParams.ALBUMS;
         break;
     }
+    const queryParamsChange = {};
+    queryParamsChange[key] = $event.length >0 ? $event : null;
+    return this.changeQueryParams(queryParamsChange, 'merge');
   }
-
-/*  updateParamsAndSearch() {  //to jest funkcja jeśli jednak byśmy chcieli manualnie aktualizować wyszukiwanie a nie "onChange".
-    const qParams = {};
-    qParams[QueryParams.QUERY] = this.queryFormControl.value
-    if (this.pickedAlbums.length)
-      qParams[QueryParams.ALBUMS] = this.pickedAlbums;
-    if (this.pickedGenres.length)
-      qParams[QueryParams.GENRES] = this.pickedGenres;
-    if (this.pickedAuthors.length)
-      qParams[QueryParams.AUTHORS] = this.pickedAuthors;
-
-    return this.changeQueryParams(qParams, '');
-  }*/
 
   onPageChange(pageChange: Page) {
     return this.changeQueryParams(pageChange, 'merge');
@@ -129,12 +126,12 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   onMinDateChange($event: string) {
-    if(this.route.snapshot.queryParamMap.get('from') != $event)
+    if (this.route.snapshot.queryParamMap.get('from') != $event)
       return this.changeQueryParams({from: $event}, 'merge')
   }
 
   onMaxDateChange($event: string) {
-    if(this.route.snapshot.queryParamMap.get('to') != $event)
+    if (this.route.snapshot.queryParamMap.get('to') != $event)
       return this.changeQueryParams({to: $event}, 'merge')
   }
 

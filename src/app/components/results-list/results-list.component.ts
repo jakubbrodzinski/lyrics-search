@@ -12,6 +12,10 @@ export class ResultsListComponent implements OnInit, OnChanges {
   FieldSort = Field;
   @Input()
   queryResults: QueryResult[];
+  @Input()
+  startOffset: number;
+  @Input()
+  startSize: number;
 
   @Input()
   totalSize: number;
@@ -35,8 +39,9 @@ export class ResultsListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.totalSize) {
-      this.currentPage = 1;
+    if (changes.totalSize || changes.startSize || changes.startOffset) {
+      this.pageSize = this.startSize || 10;
+      this.currentPage = (this.startOffset / this.pageSize) || 1;
       this.recalculatePages();
     }
   }

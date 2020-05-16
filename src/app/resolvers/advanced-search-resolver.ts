@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 import {ElasticService} from "../services/elastic.service";
 import {AbstractQueryResolver} from "../models/abstract-query-resolver";
 import {QueryParams} from "../models/query-params";
-import {FacetType} from "../models/facet-type";
 
 @Injectable()
 export class AdvancedSearchResolver extends AbstractQueryResolver implements Resolve<PagedResults> {

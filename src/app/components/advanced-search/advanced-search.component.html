@@ -315,17 +315,13 @@
       <div>
         From:
         <app-date-facet #fromSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="false"
-                        (dateChange)="onMinDateChange($event)"></app-date-facet>
+                        (dateChange)="onMinDateChange($event)" [startValue]="onStartMinDate"></app-date-facet>
       </div>
 
       <div>
         To:
         <app-date-facet #toSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="true"
-                        (dateChange)="onMaxDateChange($event)"></app-date-facet>
-      </div>
-
-      <button mat-raised-button (click)=" updateParamsAndSearch()
-        ">CLICK ME</button>
+                        (dateChange)="onMaxDateChange($event)" [startValue]="onStartMaxDate"></app-date-facet>
       </div>
       <div>
         <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"

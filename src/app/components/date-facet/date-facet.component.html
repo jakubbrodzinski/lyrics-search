@@ -1,6 +1,6 @@
 <div style="width: 200px; height: 200px">
-  <mat-checkbox (change)="onCheckboxChange($event)" [disabled]="!minDate || !maxDate"></mat-checkbox>
+  <mat-checkbox (change)="onCheckboxChange($event)" [checked]="!disabled" [disabled]="!minDate || !maxDate"></mat-checkbox>
   <mat-slider #matSlider [style]="'width:500px'" [disabled]="disabled" [min]="minAsNumber" [max]="maxAsNumber" [displayWith]="formatFunction"
-              thumbLabel (valueChange)="onDateChange($event)"></mat-slider>
+              thumbLabel (valueChange)="onDateChange($event)" [value]="sliderValue"></mat-slider>
 
 </div>

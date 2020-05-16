@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatSlider} from "@angular/material/slider";
 
@@ -12,6 +12,8 @@ export class DateFacetComponent implements OnChanges {
   minDate: string; //yyyy-MM-dd
   @Input()
   maxDate: string; // yyyy-MM-dd
+  @Input()
+  startValue: string //yyyy-MM
   @Input()
   inverted: boolean;
   @Output()
@@ -27,7 +29,7 @@ export class DateFacetComponent implements OnChanges {
 
   formatFunction: (number) => string = (_) => '00-0000';
 
-  @ViewChild('matSlider') matSlider: MatSlider;
+  sliderValue: number = 0;
 
   constructor() {
   }
@@ -39,28 +41,41 @@ export class DateFacetComponent implements OnChanges {
       this.maxYear = Number(this.maxDate.substr(0, 4))
       this.maxMonth = Number(this.maxDate.substr(5, 2))
       this.calculateMaxAsNumber();
+      if (this.startValue)
+        this.loadStartValue();
     } else {
       this.disabled = true;
       this.dateChange.emit(null);
-      this.formatFunction = (_) => '00-0000';
+      this.formatFunction = (_) => '0000-00';
     }
   }
 
+  private loadStartValue() {
+    this.disabled = false;
+    let year = Number(this.startValue.substr(0, 4))
+    let month = Number(this.startValue.substr(5, 2))
+    let diff = this.getDiff(this.minYear, this.minMonth, year, month);
+    this.sliderValue = diff;
+  }
+
   private calculateMaxAsNumber() {
-    let diff = 0;
-    if (this.minYear === this.maxYear) {
-      this.maxAsNumber = this.maxMonth - this.minMonth;
-      return
-    }
-    if (this.minMonth < this.maxMonth) {
-      diff += this.maxMonth - this.minMonth;
-      diff += 12 * (this.maxYear - this.minYear);
-    } else {
-      diff += 12 - this.minMonth + this.maxMonth;
-      diff += 12 * (this.maxYear - this.minYear - 1);
-    }
-    this.maxAsNumber = diff;
+    this.maxAsNumber = this.getDiff(this.minYear, this.minMonth, this.maxYear, this.maxMonth);
     this.reassignFormatFunction()
+  }
+
+  private getDiff(beforeYear, beforeMonth, afterYear, afterMonth) {
+    if (beforeYear === afterYear) {
+      return afterMonth - beforeMonth;
+    }
+    let diff = 0;
+    if (beforeMonth < afterMonth) {
+      diff += afterMonth - beforeMonth
+      diff += 12 * (afterYear - beforeYear);
+    } else {
+      diff += 12 - beforeMonth + afterMonth
+      diff += 12 * (afterYear - beforeYear - 1);
+    }
+    return diff;
   }
 
   private reassignFormatFunction() {
@@ -71,14 +86,14 @@ export class DateFacetComponent implements OnChanges {
         year += 1;
         month -= 12;
       }
-      return month.toString() + '-' + year;
+      return year + (month < 10 ? '-0' : '-') + month;
     }
   }
 
   onCheckboxChange($event: MatCheckboxChange) {
     this.disabled = !$event.checked
-    if(this.disabled) {
-      this.matSlider.value=0;
+    if (this.disabled) {
+      this.sliderValue = 0;
       this.dateChange.emit(null);
     }
   }

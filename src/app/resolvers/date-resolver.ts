@@ -12,8 +12,7 @@ export class DateResolver extends AbstractQueryResolver implements Resolve<DateF
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DateFacet> | DateFacet {
-    const qParamMap = route.queryParamMap;
-    return this.elasticService.getFacetDates(super.convertToQuery(qParamMap));
+    return this.elasticService.getFacetDates();
   }
 
 }

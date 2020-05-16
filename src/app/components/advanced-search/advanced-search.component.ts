@@ -31,7 +31,9 @@ export class AdvancedSearchComponent implements OnInit {
   pickedAlbums: string[] = [];
 
   minDate: string;
+  onStartMinDate: string;
   maxDate: string;
+  onStartMaxDate: string;
 
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
@@ -59,6 +61,12 @@ export class AdvancedSearchComponent implements OnInit {
     if (paramMap.has(QueryParams.ALBUMS)) {
       this.onStartAlbums = paramMap.getAll(QueryParams.ALBUMS);
       this.pickedAlbums = this.onStartAlbums;
+    }
+    if(paramMap.has(QueryParams.FROM)){
+      this.onStartMinDate= paramMap.get(QueryParams.FROM);
+    }
+    if(paramMap.has(QueryParams.TO)){
+      this.onStartMaxDate= paramMap.get(QueryParams.TO);
     }
   }
 
@@ -94,7 +102,7 @@ export class AdvancedSearchComponent implements OnInit {
     }
   }
 
-  updateParamsAndSearch() {
+/*  updateParamsAndSearch() {  //to jest funkcja jeśli jednak byśmy chcieli manualnie aktualizować wyszukiwanie a nie "onChange".
     const qParams = {};
     qParams[QueryParams.QUERY] = this.queryFormControl.value
     if (this.pickedAlbums.length)
@@ -105,7 +113,7 @@ export class AdvancedSearchComponent implements OnInit {
       qParams[QueryParams.AUTHORS] = this.pickedAuthors;
 
     return this.changeQueryParams(qParams, '');
-  }
+  }*/
 
   onPageChange(pageChange: Page) {
     return this.changeQueryParams(pageChange, 'merge');

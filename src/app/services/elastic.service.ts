@@ -30,10 +30,9 @@ export class ElasticService {
     return this.getFilteredFacets(query, 'album.name');
   }
 
-  getFacetDates(query: Query): Observable<DateFacet> {
+  getFacetDates(): Observable<DateFacet> {
     const facetQuery = {};
     facetQuery['size'] = 0;
-    facetQuery['query'] = QueryUtils.convertToElasticQuery(query);
     facetQuery['aggs'] = QueryUtils.createMinMaxDateAggregationQuery('date', 'min_date', 'max_date');
     return this.http.post<any>(this.ES_URL, facetQuery).pipe(
       map<any, DateFacet>(json => {

@@ -3,7 +3,7 @@ export enum QueryParams {
   QUERY = 'query',
   AUTHORS = ' authors',
   ALBUMS = 'albums',
-  FROM = 'form',
+  FROM = 'from',
   TO = 'to',
   OFFSET = 'offset',
   PAGE_SIZE = 'size',

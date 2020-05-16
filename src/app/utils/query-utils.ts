@@ -27,13 +27,14 @@ export class QueryUtils {
     if (query.genreFacet && query.genreFacet.length) {
       mustBody.push(QueryUtils.createBoolClause('terms', 'genres', query.genreFacet));
     }
-    if(query.from){
-      //TODO
+    if (query.from || query.to) {
+      let dateClause = {};
+      if (query.from)
+        dateClause['gte'] = query.from;
+      if (query.to)
+        dateClause['lte'] = query.to;
+      mustBody.push({range: {date: dateClause}})
     }
-    if(query.to){
-      //TODO
-    }
-
     return {bool: {must: mustBody}};
   }
 
@@ -49,14 +50,14 @@ export class QueryUtils {
     return aggrQuery;
   }
 
-  static createMinMaxDateAggregationQuery(path:string,minName: string, maxName:string): any {
+  static createMinMaxDateAggregationQuery(path: string, minName: string, maxName: string): any {
     const pathQuery = {
       field: path,
       format: 'yyyy-MM-dd'
     }
     const aggQuery = {}
-    aggQuery[minName]= {min: pathQuery}
-    aggQuery[maxName]= {max: pathQuery}
+    aggQuery[minName] = {min: pathQuery}
+    aggQuery[maxName] = {max: pathQuery}
     return aggQuery;
   }
 }

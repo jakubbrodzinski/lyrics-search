@@ -9,6 +9,8 @@ export abstract class AbstractQueryResolver {
       authorFacet: qParamMap.getAll(QueryParams.AUTHORS),
       genreFacet: qParamMap.getAll(QueryParams.GENRES),
       albumFacet: qParamMap.getAll(QueryParams.ALBUMS),
+      from: qParamMap.get(QueryParams.FROM),
+      to: qParamMap.get(QueryParams.TO),
       getText: false
     }
   }

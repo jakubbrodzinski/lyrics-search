@@ -19,6 +19,10 @@ import {AlbumsResolver} from "./resolvers/albums-resolver";
 import {AuthorsResolver} from "./resolvers/authors-resolver";
 import {GenresResolver} from "./resolvers/genres-resolver";
 import { ResultsListComponent } from './components/results-list/results-list.component';
+import {DateResolver} from "./resolvers/date-resolver";
+import { DateFacetComponent } from './components/date-facet/date-facet.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { ResultsListComponent } from './components/results-list/results-list.com
     FacetChipsPickerComponent,
     AdvancedSearchComponent,
     SimpleSearchComponent,
-    ResultsListComponent
+    ResultsListComponent,
+    DateFacetComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +43,11 @@ import { ResultsListComponent } from './components/results-list/results-list.com
     MatIconModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSliderModule
   ],
-  providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver],
+  providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver, DateResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {

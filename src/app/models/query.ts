@@ -3,5 +3,7 @@ export interface Query {
   authorFacet: string[];
   genreFacet: string[];
   albumFacet: string[];
+  from: string,
+  to: string,
   getText: boolean;
 }

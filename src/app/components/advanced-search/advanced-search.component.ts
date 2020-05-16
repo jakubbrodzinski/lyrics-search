@@ -30,6 +30,9 @@ export class AdvancedSearchComponent implements OnInit {
   onStartAlbums: string[] = [];
   pickedAlbums: string[] = [];
 
+  minDate: string;
+  maxDate: string;
+
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
 
@@ -71,6 +74,10 @@ export class AdvancedSearchComponent implements OnInit {
       this.queryResults = data.pagedResults.results;
       this.queryResultsCount = data.pagedResults.total_size;
     }
+    if (data.dates) {
+      this.minDate = data.dates.min;
+      this.maxDate = data.dates.max;
+    }
   }
 
   chipsChanges($event: string[], type: FacetType) {
@@ -111,6 +118,16 @@ export class AdvancedSearchComponent implements OnInit {
     } else {
       return this.changeQueryParams(sortChange, 'merge');
     }
+  }
+
+  onMinDateChange($event: string) {
+    if(this.route.snapshot.queryParamMap.get('from') != $event)
+      return this.changeQueryParams({from: $event}, 'merge')
+  }
+
+  onMaxDateChange($event: string) {
+    if(this.route.snapshot.queryParamMap.get('to') != $event)
+      return this.changeQueryParams({to: $event}, 'merge')
   }
 
   private changeQueryParams(newParams: any, strategy: 'merge' | 'preserve' | '') {

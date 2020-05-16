@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {from, Observable} from "rxjs";
-import {FacetEntity} from "../models/facet-entity";
+import {DateFacet, FacetEntity} from "../models/facet-entity";
 import {catchError, map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Query} from "../models/query";
@@ -30,6 +30,20 @@ export class ElasticService {
     return this.getFilteredFacets(query, 'album.name');
   }
 
+  getFacetDates(query: Query): Observable<DateFacet> {
+    const facetQuery = {};
+    facetQuery['size'] = 0;
+    facetQuery['query'] = QueryUtils.convertToElasticQuery(query);
+    facetQuery['aggs'] = QueryUtils.createMinMaxDateAggregationQuery('date', 'min_date', 'max_date');
+    return this.http.post<any>(this.ES_URL, facetQuery).pipe(
+      map<any, DateFacet>(json => {
+        const aggr = json.aggregations;
+        const min = aggr['min_date'].value_as_string;
+        const max = aggr['max_date'].value_as_string;
+        return {min: min, max: max};
+      }));
+  }
+
   private getFilteredFacets(query: Query, path: string): Observable<FacetEntity[]> {
     const facetQuery = {};
     facetQuery['size'] = 0;
@@ -44,7 +58,7 @@ export class ElasticService {
     );
   }
 
-  getFacetDetails(facetText: string, type: FacetType.ALBUMS | FacetType.AUTHORS) : Observable<any>{
+  getFacetDetails(facetText: string, type: FacetType.ALBUMS | FacetType.AUTHORS): Observable<any> {
     const sourceField = type === FacetType.ALBUMS ? 'album' : 'author';
     const key = type === FacetType.ALBUMS ? 'album.name' : 'author.name';
     let elasticQuery = {};

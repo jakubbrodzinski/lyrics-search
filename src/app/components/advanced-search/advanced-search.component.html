@@ -312,12 +312,24 @@
         <app-facet-chips-picker [allAvailable]="genres" [pickedOnStart]="onStartGenres"
                                 (onChipsChange)="chipsChanges($event,ChipChange.GENRES)"></app-facet-chips-picker>
       </div>
+      <div>
+        From:
+        <app-date-facet #fromSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="false"
+                        (dateChange)="onMinDateChange($event)"></app-date-facet>
+      </div>
 
-      <button mat-raised-button (click)="updateParamsAndSearch()">CLICK ME</button>
-    </div>
-    <div>
-      <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
-                        (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"></app-results-list>
+      <div>
+        To:
+        <app-date-facet #toSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="true"
+                        (dateChange)="onMaxDateChange($event)"></app-date-facet>
+      </div>
+
+      <button mat-raised-button (click)=" updateParamsAndSearch()
+        ">CLICK ME</button>
+      </div>
+      <div>
+        <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
+                          (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"></app-results-list>
+      </div>
     </div>
   </div>
-</div>

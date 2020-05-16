@@ -6,6 +6,7 @@ import {AdvancedSearchResolver} from "./resolvers/advanced-search-resolver";
 import {AuthorsResolver} from "./resolvers/authors-resolver";
 import {AlbumsResolver} from "./resolvers/albums-resolver";
 import {GenresResolver} from "./resolvers/genres-resolver";
+import {DateResolver} from "./resolvers/date-resolver";
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
       pagedResults: AdvancedSearchResolver,
       authors: AuthorsResolver,
       albums: AlbumsResolver,
-      genres: GenresResolver
+      genres: GenresResolver,
+      dates: DateResolver
     },
     runGuardsAndResolvers: 'pathParamsOrQueryParamsChange'
   },

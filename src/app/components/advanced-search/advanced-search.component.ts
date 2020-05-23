@@ -31,9 +31,11 @@ export class AdvancedSearchComponent implements OnInit {
   pickedAlbums: string[] = [];
 
   minDate: string;
-  onStartMinDate: string;
+  startFromDate: string;
+  fromDate: string;
   maxDate: string;
-  onStartMaxDate: string;
+  startToDate: string;
+  toDate: string;
 
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
@@ -67,10 +69,12 @@ export class AdvancedSearchComponent implements OnInit {
     }
     this.startPageSize = Number(snapshotParamMap.get('size') || 10);
     this.startOffset = Number(snapshotParamMap.get('offset') || 0);
-    if (snapshotParamMap.has('from'))
-      this.onStartMinDate = snapshotParamMap.get('from');
-    if (snapshotParamMap.has('to'))
-      this.onStartMaxDate = snapshotParamMap.get('to');
+    if (snapshotParamMap.has('from')) {
+      this.startFromDate = snapshotParamMap.get('from');
+    }
+    if (snapshotParamMap.has('to')) {
+      this.startToDate = snapshotParamMap.get('to');
+    }
   }
 
   private handleDataChange(data: Data) {
@@ -91,6 +95,24 @@ export class AdvancedSearchComponent implements OnInit {
     }
   }
 
+  updateParamsAndSearch() {
+    const searchParams = {};
+    searchParams[QueryParams.QUERY] = this.queryFormControl.value;
+    if (this.pickedAlbums.length > 0)
+      searchParams[QueryParams.ALBUMS] = this.pickedAlbums;
+    if (this.pickedAuthors.length > 0)
+      searchParams[QueryParams.AUTHORS] = this.pickedAuthors;
+    if (this.pickedGenres.length > 0)
+      searchParams[QueryParams.GENRES] = this.pickedGenres;
+    if (this.fromDate)
+      searchParams[QueryParams.FROM] = this.fromDate;
+    if (this.toDate)
+      searchParams[QueryParams.TO] = this.toDate;
+
+    return this.changeQueryParams(searchParams, '');
+  }
+
+
   chipsChanges($event: string[], type: FacetType) {
     let key: QueryParams;
     switch (type) {
@@ -107,9 +129,6 @@ export class AdvancedSearchComponent implements OnInit {
         key = QueryParams.ALBUMS;
         break;
     }
-    const queryParamsChange = {};
-    queryParamsChange[key] = $event.length >0 ? $event : null;
-    return this.changeQueryParams(queryParamsChange, 'merge');
   }
 
   onPageChange(pageChange: Page) {
@@ -126,13 +145,11 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   onMinDateChange($event: string) {
-    if (this.route.snapshot.queryParamMap.get('from') != $event)
-      return this.changeQueryParams({from: $event}, 'merge')
+    this.fromDate = $event;
   }
 
   onMaxDateChange($event: string) {
-    if (this.route.snapshot.queryParamMap.get('to') != $event)
-      return this.changeQueryParams({to: $event}, 'merge')
+    this.toDate = $event;
   }
 
   private changeQueryParams(newParams: any, strategy: 'merge' | 'preserve' | '') {

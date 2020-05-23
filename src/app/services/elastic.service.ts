@@ -5,7 +5,7 @@ import {DateFacet, FacetEntity} from "../models/facet-entity";
 import {catchError, map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Query} from "../models/query";
-import {NameIdEntity, PagedResults, QueryResult} from "../models/query-result";
+import {NameIdEntity, PagedResults, Song} from "../models/query-result";
 import {QueryUtils} from "../utils/query-utils";
 import {FacetType} from "../models/facet-type";
 
@@ -94,13 +94,12 @@ export class ElasticService {
       }));
   }
 
-  getSongBy_Id(_id: string): Observable<QueryResult> {
+  getSongBy_Id(_id: string): Observable<Song> {
     let elasticQuery = {};
     elasticQuery['size'] = 1;
     elasticQuery['query'] = {match: {}};
     elasticQuery['query']['match']['_id'] = _id;
-
     return this.http.post<any>(this.ES_URL, elasticQuery)
-      .pipe(map<any, QueryResult>(response => response.hits.hits[0]));
+      .pipe(map<any, Song>(response => response.hits.hits[0]._source));
   }
 }

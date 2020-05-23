@@ -10,7 +10,7 @@ export interface QueryResult {
   _source: Song;
 }
 
-interface Song {
+export interface Song {
   album: NameIdEntity;
   author: NameIdEntity;
   title: string;

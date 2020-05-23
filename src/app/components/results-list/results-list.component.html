@@ -4,7 +4,7 @@
     <div class="left">
       <mat-form-field>
         <mat-label>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</mat-label>
-        <select #sortSelect matNativeControl (change)='sortBy(sortSelect.value)'>
+        <select #sortSelect matNativeControl (click)='sortBy(sortSelect.value)'>
           <option [value]='FieldSort.SCORE'>Score</option>
           <option [value]='FieldSort.GENRE'>Genre</option>
           <option [value]="FieldSort.AUTHOR">Author</option>
@@ -28,5 +28,5 @@
   <div *ngFor="let song of queryResults">
     <app-results-list-element [song]="song"></app-results-list-element>
   </div>
-  
+
 </div>

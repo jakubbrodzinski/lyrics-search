@@ -1,6 +1,6 @@
 <div class="content" role="main">
   <div class="left">
-    <mat-form-field class=query-form>
+    <mat-form-field class=query-form (keyup.enter)="updateParamsAndSearch()">
       <mat-label>Query</mat-label>
       <input matInput placeholder="Query" [formControl]="queryFormControl">
     </mat-form-field>

@@ -9,7 +9,7 @@
       <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
     </mat-chip>
     <input
-      placeholder="New facet"
+      [placeholder]="placeholder"
       #facetInput
       [formControl]="filterControl"
       [matAutocomplete]="auto"

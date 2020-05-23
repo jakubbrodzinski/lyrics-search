@@ -21,17 +21,17 @@ export class ResultsListComponent implements OnInit, OnChanges {
   totalSize: number;
 
   @Output()
-  pagingEvent = new EventEmitter<Page>()
+  pagingEvent = new EventEmitter<Page>();
 
   @Output()
-  sortingEvent = new EventEmitter<Sort>()
+  sortingEvent = new EventEmitter<Sort>();
 
   currentSort: Sort = {
     field: Field.SCORE,
     direction: Direction.DESC
-  }
+  };
 
-  pageSize: number = 10
+  pageSize: number = 10;
   currentPage: number = 1;
   possiblePages: number[] = [];
 
@@ -48,8 +48,9 @@ export class ResultsListComponent implements OnInit, OnChanges {
 
   private recalculatePages() {
     let pages = [];
-    for (let p = 0; p < this.totalSize / this.pageSize; p++)
+    for (let p = 0; p < this.totalSize / this.pageSize; p++) {
       pages.push(p + 1);
+    }
     this.possiblePages = pages;
   }
 
@@ -63,7 +64,7 @@ export class ResultsListComponent implements OnInit, OnChanges {
     } else if (this.currentSort.direction === Direction.ASC) {
       this.currentSort.direction = Direction.DESC;
     } else {
-      this.currentSort.field = Field.NONE
+      this.currentSort.field = Field.NONE;
     }
     this.sortingEvent.emit(this.currentSort);
   }

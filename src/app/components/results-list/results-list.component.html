@@ -19,6 +19,6 @@
 </div>
 <div>
   <div *ngFor="let song of queryResults">
-    TITLE: {{song._source.title}}
+    <app-results-list-element [song]="song"></app-results-list-element>
   </div>
 </div>

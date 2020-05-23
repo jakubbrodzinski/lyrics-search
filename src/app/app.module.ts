@@ -23,6 +23,7 @@ import {DateResolver} from "./resolvers/date-resolver";
 import { DateFacetComponent } from './components/date-facet/date-facet.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSliderModule} from "@angular/material/slider";
+import { ResultsListElementComponent } from './components/results-list-element/results-list-element.component';
 import { SongDetailsComponent } from './components/song-details/song-details.component';
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
 import {MatGridListModule} from "@angular/material/grid-list";
@@ -34,6 +35,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
     AdvancedSearchComponent,
     SimpleSearchComponent,
     ResultsListComponent,
+    DateFacetComponent,
+    ResultsListElementComponent,
     DateFacetComponent,
     SongDetailsComponent
   ],

@@ -1,0 +1,20 @@
+<div class="song-result">
+  <div class="album-photo">
+    <img [src]="getCoverImageUrl(song._source.album.id)"
+         alt={{song._source.album.name}}
+         style="width: 200px">
+  </div>
+
+  <div class="info">
+    <table style="width:100%">
+<!--      <tr>{{song._source.album.id}}</tr>-->
+      <tr>{{song._source.album.name}}</tr>
+<!--      <tr>{{song._source.author.id}}</tr>-->
+      <tr>{{song._source.author.name}}</tr>
+      <tr>{{song._source.date}}</tr>
+      <tr>{{song._source.feats}}</tr>
+      <tr>{{song._source.genres}}</tr>
+      <tr>{{song._source.title}}</tr>
+    </table>
+  </div>
+</div>

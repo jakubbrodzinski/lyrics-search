@@ -1,39 +1,32 @@
 <div class="result-list">
 
   <div class="left-right">
-    <mat-form-field>
-      <mat-label>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</mat-label>
-      <select #sortSelect matNativeControl (change)='sortBy(sortSelect.value)'>
-        <option [value]='FieldSort.SCORE'>Score</option>
-        <option [value]='FieldSort.GENRE'>Genre</option>
-        <option [value]="FieldSort.AUTHOR">Author</option>
-        <option [value]="FieldSort.ALBUM">Album</option>
-        <option [value]="FieldSort.TITLE">Title</option>
-        <option [value]="FieldSort.DATE">Date</option>
-      </select>
-    </mat-form-field>
-  </div>
+    <div class="left">
+      <mat-form-field>
+        <mat-label>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</mat-label>
+        <select #sortSelect matNativeControl (change)='sortBy(sortSelect.value)'>
+          <option [value]='FieldSort.SCORE'>Score</option>
+          <option [value]='FieldSort.GENRE'>Genre</option>
+          <option [value]="FieldSort.AUTHOR">Author</option>
+          <option [value]="FieldSort.ALBUM">Album</option>
+          <option [value]="FieldSort.TITLE">Title</option>
+          <option [value]="FieldSort.DATE">Date</option>
+        </select>
+      </mat-form-field>
+    </div>
 
-  <div class="left-right">
-    <mat-form-field>
-      <mat-label>Choose page size</mat-label>
-      <select #pageSelect matNativeControl (change)='changePageSize(pageSelect.value)'>
-        <option [value]=10>10</option>
-        <option [value]=25>25</option>
-        <option [value]=50>50</option>
-      </select>
-    </mat-form-field>
-  </div>
-
-  <div class="left-right">Current Page {{currentPage}} of {{possiblePages.length}} with size {{pageSize}}</div>
-
-  <div class="left-right">
-    <ng-container *ngFor="let pageIndex of possiblePages">
-      <button mat-raised-button type="button" (click)="changePage(pageIndex)">{{pageIndex}}</button>
-    </ng-container>
+    <div class="right">
+      <mat-paginator [length]='getTotalSize()'
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 50]"
+                     (page)="handlePage($event)"
+                     showFirstLastButtons="true">
+      </mat-paginator>
+    </div>
   </div>
 
   <div *ngFor="let song of queryResults">
     <app-results-list-element [song]="song"></app-results-list-element>
   </div>
+  
 </div>

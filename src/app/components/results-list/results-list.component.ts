@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {QueryResult} from "../../models/query-result";
 import {Page} from "../../models/page";
 import {Direction, Field, Sort} from "../../models/sort";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-results-list',
@@ -32,7 +33,7 @@ export class ResultsListComponent implements OnInit, OnChanges {
   };
 
   pageSize: number = 10;
-  currentPage: number = 1;
+  currentPage: number = 0;
   possiblePages: number[] = [];
 
   constructor() {
@@ -41,7 +42,7 @@ export class ResultsListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.totalSize || changes.startSize || changes.startOffset) {
       this.pageSize = this.startSize || 10;
-      this.currentPage = (this.startOffset / this.pageSize) || 1;
+      this.currentPage = (this.startOffset / this.pageSize) || 0;
       this.recalculatePages();
     }
   }
@@ -49,12 +50,14 @@ export class ResultsListComponent implements OnInit, OnChanges {
   private recalculatePages() {
     let pages = [];
     for (let p = 0; p < this.totalSize / this.pageSize; p++) {
-      pages.push(p + 1);
+      pages.push(p);
     }
     this.possiblePages = pages;
   }
 
   ngOnInit(): void {
+    console.log('getPossiblePagesLength ' + this.getPossiblePagesLength())
+    console.log('getTotalSize ' + this.getTotalSize())
   }
 
   sortBy(field: Field) {
@@ -82,5 +85,20 @@ export class ResultsListComponent implements OnInit, OnChanges {
       this.currentPage = page;
       this.pagingEvent.emit({size: this.pageSize, offset: page * this.pageSize});
     }
+  }
+
+  getPossiblePagesLength(): number {
+    return this.possiblePages.length;
+  }
+
+  handlePage(event: PageEvent) {
+    console.log(event);
+    this.changePageSize(event.pageSize);
+    this.changePage(event.pageIndex);
+  }
+
+  getTotalSize() {
+    console.log(this.totalSize);
+    return this.totalSize;
   }
 }

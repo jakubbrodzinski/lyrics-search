@@ -1,23 +1,38 @@
-<div>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</div>
-<div>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.GENRE)">Gatunek</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.AUTHOR)">Autor</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.ALBUM)">Album</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.TITLE)">Tytuł</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.DATE)">Data</button>
-</div>
-<div>Current Page {{currentPage}} of {{possiblePages.length}} with size {{pageSize}}</div>
-<div>
-  <div>
-    <button mat-raised-button type="button" (click)="changePageSize(10)">10</button>
-    <button mat-raised-button type="button" (click)="changePageSize(25)">25</button>
-    <button mat-raised-button type="button" (click)="changePageSize(50)">50</button>
+<div class="result-list">
+
+  <div class="left-right">
+    <mat-form-field>
+      <mat-label>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</mat-label>
+      <select #sortSelect matNativeControl (change)='sortBy(sortSelect.value)'>
+        <option [value]='FieldSort.SCORE'>Score</option>
+        <option [value]='FieldSort.GENRE'>Genre</option>
+        <option [value]="FieldSort.AUTHOR">Author</option>
+        <option [value]="FieldSort.ALBUM">Album</option>
+        <option [value]="FieldSort.TITLE">Title</option>
+        <option [value]="FieldSort.DATE">Date</option>
+      </select>
+    </mat-form-field>
   </div>
-  <ng-container *ngFor="let pageIndex of possiblePages">
-    <button mat-raised-button type="button" (click)="changePage(pageIndex)">{{pageIndex}}</button>
-  </ng-container>
-</div>
-<div>
+
+  <div class="left-right">
+    <mat-form-field>
+      <mat-label>Choose page size</mat-label>
+      <select #pageSelect matNativeControl (change)='changePageSize(pageSelect.value)'>
+        <option [value]=10>10</option>
+        <option [value]=25>25</option>
+        <option [value]=50>50</option>
+      </select>
+    </mat-form-field>
+  </div>
+
+  <div class="left-right">Current Page {{currentPage}} of {{possiblePages.length}} with size {{pageSize}}</div>
+
+  <div class="left-right">
+    <ng-container *ngFor="let pageIndex of possiblePages">
+      <button mat-raised-button type="button" (click)="changePage(pageIndex)">{{pageIndex}}</button>
+    </ng-container>
+  </div>
+
   <div *ngFor="let song of queryResults">
     <app-results-list-element [song]="song"></app-results-list-element>
   </div>

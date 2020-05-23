@@ -18,15 +18,16 @@ import {AdvancedSearchResolver} from "./resolvers/advanced-search-resolver";
 import {AlbumsResolver} from "./resolvers/albums-resolver";
 import {AuthorsResolver} from "./resolvers/authors-resolver";
 import {GenresResolver} from "./resolvers/genres-resolver";
-import { ResultsListComponent } from './components/results-list/results-list.component';
+import {ResultsListComponent} from './components/results-list/results-list.component';
 import {DateResolver} from "./resolvers/date-resolver";
-import { DateFacetComponent } from './components/date-facet/date-facet.component';
+import {DateFacetComponent} from './components/date-facet/date-facet.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSliderModule} from "@angular/material/slider";
-import { ResultsListElementComponent } from './components/results-list-element/results-list-element.component';
-import { SongDetailsComponent } from './components/song-details/song-details.component';
+import {ResultsListElementComponent} from './components/results-list-element/results-list-element.component';
+import {SongDetailsComponent} from './components/song-details/song-details.component';
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -40,21 +41,22 @@ import {MatGridListModule} from "@angular/material/grid-list";
     DateFacetComponent,
     SongDetailsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        NoopAnimationsModule,
-        MatInputModule,
-        MatChipsModule,
-        MatIconModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatSliderModule,
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NoopAnimationsModule,
+    MatInputModule,
+    MatChipsModule,
+    MatIconModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatPaginatorModule
+  ],
   providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver, DateResolver, SongDetailsResolver],
   bootstrap: [AppComponent]
 })

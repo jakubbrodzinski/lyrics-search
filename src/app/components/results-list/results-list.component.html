@@ -14,13 +14,13 @@
         </select>
       </mat-form-field>
     </div>
-
     <div class="right">
       <mat-paginator [length]='getTotalSize()'
                      [pageSize]="10"
                      [pageSizeOptions]="[10, 25, 50]"
                      (page)="handlePage($event)"
-                     showFirstLastButtons="true">
+                     showFirstLastButtons="true"
+                     style="background-color: #eeeeee">
       </mat-paginator>
     </div>
   </div>

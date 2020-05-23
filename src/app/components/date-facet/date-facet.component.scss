@@ -1,0 +1,14 @@
+.date-div {
+  display: flex;
+  margin: 5%;
+
+  .left {
+    width: 30%;
+    float: left;
+  }
+
+  .right {
+    width: 70%;
+    float: right;
+  }
+}

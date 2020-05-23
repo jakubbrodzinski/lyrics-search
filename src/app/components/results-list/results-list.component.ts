@@ -56,8 +56,6 @@ export class ResultsListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('getPossiblePagesLength ' + this.getPossiblePagesLength())
-    console.log('getTotalSize ' + this.getTotalSize())
   }
 
   sortBy(field: Field) {
@@ -87,18 +85,12 @@ export class ResultsListComponent implements OnInit, OnChanges {
     }
   }
 
-  getPossiblePagesLength(): number {
-    return this.possiblePages.length;
-  }
-
   handlePage(event: PageEvent) {
-    console.log(event);
     this.changePageSize(event.pageSize);
     this.changePage(event.pageIndex);
   }
 
   getTotalSize() {
-    console.log(this.totalSize);
     return this.totalSize;
   }
 }

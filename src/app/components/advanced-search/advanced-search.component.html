@@ -20,7 +20,7 @@
                               (onChipsChange)="chipsChanges($event,ChipChange.GENRES)"></app-facet-chips-picker>
     </div>
 
-    <div>
+    <div class="center-div">
       From:
       <app-date-facet #fromSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="false"
                       (dateChange)="onMinDateChange($event)" [startValue]="onStartMinDate"></app-date-facet>
@@ -30,6 +30,10 @@
       To:
       <app-date-facet #toSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="true"
                       (dateChange)="onMaxDateChange($event)" [startValue]="onStartMaxDate"></app-date-facet>
+    </div>
+
+    <div class="center-div" align="center">
+      <button mat-raised-button (click)="updateParamsAndSearch()">search</button>
     </div>
   </div>
 

@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {ElasticService} from "../services/elastic.service";
 import {FacetEntity} from "../models/facet-entity";
 import {AbstractQueryResolver} from "../models/abstract-query-resolver";
+import {tap} from "rxjs/operators";
 
 @Injectable()
 export class AlbumsResolver extends AbstractQueryResolver implements Resolve<FacetEntity[]> {
@@ -13,7 +14,8 @@ export class AlbumsResolver extends AbstractQueryResolver implements Resolve<Fac
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FacetEntity[]> | FacetEntity[] {
     const qParamMap = route.queryParamMap;
-    return this.elasticService.getFacetAlbums(super.convertToQuery(qParamMap));
+    return this.elasticService.getFacetAlbums(super.convertToEmptyQuery(qParamMap))
+      .pipe(tap<FacetEntity[]>(arr => arr.sort((e1, e2) => e2.doc_count - e1.doc_count)));
   }
 
 }

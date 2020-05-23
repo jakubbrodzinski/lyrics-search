@@ -109,7 +109,7 @@ export class AdvancedSearchComponent implements OnInit {
     if (this.toDate)
       searchParams[QueryParams.TO] = this.toDate;
 
-    return this.changeQueryParams(searchParams, '');
+    return this.changeQueryParams(searchParams, 'merge');
   }
 
 

@@ -2,14 +2,11 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/rou
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {ElasticService} from "../services/elastic.service";
-import {FacetEntity} from "../models/facet-entity";
-import {AbstractQueryResolver} from "../models/abstract-query-resolver";
 import {Song} from "../models/query-result";
 
 @Injectable()
-export class SongDetailsResolver extends AbstractQueryResolver implements Resolve<Song> {
+export class SongDetailsResolver implements Resolve<Song> {
   constructor(private elasticService: ElasticService) {
-    super();
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Song> | Song {

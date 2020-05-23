@@ -14,4 +14,16 @@ export abstract class AbstractQueryResolver {
       getText: false
     }
   }
+
+  protected convertToEmptyQuery(qParamMap: ParamMap): Query {
+    return {
+      query: qParamMap.get(QueryParams.QUERY),
+      authorFacet: null,
+      genreFacet: null,
+      albumFacet: null,
+      from: null,
+      to: null,
+      getText: false
+    }
+  }
 }

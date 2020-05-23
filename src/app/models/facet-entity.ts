@@ -1,6 +1,6 @@
 export interface FacetEntity {
   key: string;
-  doc_count: string;
+  doc_count: number;
 }
 
 export interface DateFacet {

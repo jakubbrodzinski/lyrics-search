@@ -18,11 +18,24 @@ export class SimpleSearchComponent {
   }
 
 
-  searchClick() {
+  getRequiredErrorMessage() {
+    return 'Please enter a text';
+  }
+
+  search() {
+    if (this.searchFormControl.hasError('required')) {
+      this.searchFormControl.markAsTouched();
+      return;
+    }
+
     this.router.navigate(['/search'], {
       queryParams: {
         query: this.searchFormControl.value
       }
-    })
+    });
+  }
+
+  searchClick() {
+    this.search();
   }
 }

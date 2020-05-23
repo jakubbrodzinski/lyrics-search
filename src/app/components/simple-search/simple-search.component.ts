@@ -32,10 +32,6 @@ export class SimpleSearchComponent {
       queryParams: {
         query: this.searchFormControl.value
       }
-    });
-  }
-
-  searchClick() {
-    this.search();
+    })
   }
 }

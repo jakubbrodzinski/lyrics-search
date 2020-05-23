@@ -23,6 +23,8 @@ import {DateResolver} from "./resolvers/date-resolver";
 import { DateFacetComponent } from './components/date-facet/date-facet.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSliderModule} from "@angular/material/slider";
+import { SongDetailsComponent } from './components/song-details/song-details.component';
+import {SongDetailsResolver} from "./resolvers/song-details-resolver";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {MatSliderModule} from "@angular/material/slider";
     AdvancedSearchComponent,
     SimpleSearchComponent,
     ResultsListComponent,
-    DateFacetComponent
+    DateFacetComponent,
+    SongDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import {MatSliderModule} from "@angular/material/slider";
     MatCheckboxModule,
     MatSliderModule
   ],
-  providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver, DateResolver],
+  providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver, DateResolver, SongDetailsResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {

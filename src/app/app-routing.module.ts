@@ -7,6 +7,8 @@ import {AuthorsResolver} from "./resolvers/authors-resolver";
 import {AlbumsResolver} from "./resolvers/albums-resolver";
 import {GenresResolver} from "./resolvers/genres-resolver";
 import {DateResolver} from "./resolvers/date-resolver";
+import {SongDetailsComponent} from "./components/song-details/song-details.component";
+import {SongDetailsResolver} from "./resolvers/song-details-resolver";
 
 
 const routes: Routes = [
@@ -23,6 +25,13 @@ const routes: Routes = [
     },
     runGuardsAndResolvers: 'pathParamsOrQueryParamsChange'
   },
+  {
+    path: 'song/:song_id',
+    component: SongDetailsComponent,
+    resolve: {
+      song: SongDetailsResolver
+    }
+  }
 ];
 
 @NgModule({

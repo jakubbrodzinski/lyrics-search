@@ -47,4 +47,8 @@ export class ResultsListElementComponent implements OnChanges {
     return 'Genres: ' + text;
   }
 
+  changeSource(event) {
+    event.target.src = 'assets/no-image-available.png';
+  }
+
 }

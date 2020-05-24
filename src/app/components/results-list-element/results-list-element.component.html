@@ -1,10 +1,10 @@
 <div class="song-result">
   <div class="album-photo">
     <ng-container *ngIf="albumURL; else stockImage">
-      <img [src]="albumURL" alt={{song._source.album.name}}>
+      <img [src]="albumURL" alt={{song._source.album.name}} (error)="changeSource($event)">
     </ng-container>
     <ng-template #stockImage>
-      <img src="assets/vinyl.jpeg">
+      <img src="assets/no-image-available.png">
     </ng-template>
   </div>
 

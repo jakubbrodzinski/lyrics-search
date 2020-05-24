@@ -2,7 +2,7 @@ server {
   listen 80;
 
     location /es_url/_search {
-      proxy_pass ${ES_URL}
+      proxy_pass ${ES_URL};
       proxy_pass_request_headers      on;
     }
 

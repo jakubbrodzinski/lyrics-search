@@ -26,3 +26,7 @@ COPY --from=builder /usr/src/lyrics-search/dist/lyrics-search/ /usr/share/nginx/
 
 #Configuration file. Should be reviewed/updated
 COPY ./nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
+
+COPY ./run.nginx.sh /usr/bin/run.nginx.sh
+RUN ["chmod", "+x", "/usr/bin/run.nginx.sh"]
+

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-simple-search',
@@ -8,10 +8,15 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./simple-search.component.scss']
 })
 export class SimpleSearchComponent {
+  searchFormGroup: FormGroup;
   searchFormControl: FormControl = new FormControl();
 
   constructor(private router: Router) {
+    this.searchFormGroup = new FormGroup({
+      searchFormControl: new FormControl()
+    });
   }
+
 
   searchClick() {
     this.router.navigate(['/search'], {

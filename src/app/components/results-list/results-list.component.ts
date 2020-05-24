@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {QueryResult} from "../../models/query-result";
 import {Page} from "../../models/page";
 import {Direction, Field, Sort} from "../../models/sort";
-import {PageEvent} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-results-list',
@@ -26,6 +26,8 @@ export class ResultsListComponent implements OnInit, OnChanges {
 
   @Output()
   sortingEvent = new EventEmitter<Sort>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   currentSort: Sort = {
     field: Field.SCORE,
@@ -90,7 +92,16 @@ export class ResultsListComponent implements OnInit, OnChanges {
     this.changePage(event.pageIndex);
   }
 
+  syncPrimaryPaginator(event: PageEvent) {
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.page.emit(event);
+
+    this.handlePage(event);
+  }
+
   getTotalSize() {
     return this.totalSize;
   }
+
 }

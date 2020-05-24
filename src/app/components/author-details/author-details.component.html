@@ -1,0 +1,11 @@
+<div class="content">
+  <div class="left">
+  </div>
+  <div class="right">
+    <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
+                      [startOffset]="startOffset" [startSize]="startPageSize"
+                      (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"
+    ></app-results-list>
+  </div>
+</div>
+

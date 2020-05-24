@@ -19,10 +19,11 @@ export class ResultsListElementComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const albumId = this.song._source.album.id;
-    if (albumId)
+    if (albumId) {
       this.albumURL = this.musicBrainzService.getCoverImageURL(albumId);
-    else
+    } else {
       this.albumURL = null;
+    }
   }
 
   changeSource(event) {

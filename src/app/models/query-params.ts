@@ -1,7 +1,7 @@
 export enum QueryParams {
   GENRES = 'genres',
   QUERY = 'query',
-  AUTHORS = ' authors',
+  AUTHORS = 'authors',
   ALBUMS = 'albums',
   FROM = 'from',
   TO = 'to',

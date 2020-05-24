@@ -1,0 +1,32 @@
+.content {
+  display: flex;
+  margin: 5% auto 5%;
+  max-width: 90%;
+}
+
+.left {
+  width: 30%;
+  background: #eeeeee;
+  padding: 5%;
+  float: left;
+}
+
+.right {
+  width: 70%;
+  float: right;
+}
+
+.center-div {
+  width: 100%;
+}
+
+.query-form {
+  width: 100%;
+}
+
+.album-photo {
+  img {
+    width: 90%;
+    align-content: center;
+  }
+}

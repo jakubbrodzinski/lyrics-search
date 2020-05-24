@@ -25,6 +25,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSliderModule} from "@angular/material/slider";
 import { SongDetailsComponent } from './components/song-details/song-details.component';
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -36,20 +37,21 @@ import {SongDetailsResolver} from "./resolvers/song-details-resolver";
     DateFacetComponent,
     SongDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NoopAnimationsModule,
-    MatInputModule,
-    MatChipsModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatSliderModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NoopAnimationsModule,
+        MatInputModule,
+        MatChipsModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatSliderModule,
+        MatGridListModule
+    ],
   providers: [AdvancedSearchResolver, AlbumsResolver, AuthorsResolver, GenresResolver, DateResolver, SongDetailsResolver],
   bootstrap: [AppComponent]
 })

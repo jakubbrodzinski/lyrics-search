@@ -1,1 +1,34 @@
-<p>song-details works!</p>
+<div id="top-nav">
+  <div>
+    <ul class="breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Genre</a></li>
+      <li><a href="#">Author</a></li>
+      <li><a href="#">Album</a></li>
+      <li>Song</li>
+    </ul>
+  </div>
+  <app-simple-search></app-simple-search>
+</div>
+<mat-grid-list cols="4" rowHeight="2:1">
+  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: lightblue">
+    Album info
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: indianred">
+    Song details
+    <h1>{{song.title}}</h1>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: lightgreen">
+    Youtube
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: mediumpurple">
+    About artist
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="2" style="background-color: orange">
+    Lyrics
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: dimgray">
+    Music map
+  </mat-grid-tile>
+</mat-grid-list>

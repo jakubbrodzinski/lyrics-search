@@ -24,6 +24,6 @@ export class MusicBrainzService {
 
   // check https://musicbrainz.org/doc/Cover_Art_Archive/API
   getCoverImageURL(albumId: string): string {
-    return `${this.COVER_ARCHIVE_URL}/${albumId}/front-500`;
+    return `${this.COVER_ARCHIVE_URL}/${albumId}/front-250`;
   }
 }

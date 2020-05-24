@@ -1,8 +1,11 @@
 <div class="song-result">
   <div class="album-photo">
-    <img [src]="getCoverImageUrl(song._source.album.id)"
-         alt={{song._source.album.name}}
-         style="width: 200px">
+    <ng-container *ngIf="albumURL; else stockImage">
+      <img [src]="albumURL" alt={{song._source.album.name}}>
+    </ng-container>
+    <ng-template #stockImage>
+      <img src="assets/vinyl.jpeg">
+    </ng-template>
   </div>
 
   <div class="info">

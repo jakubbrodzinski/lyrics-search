@@ -5,6 +5,10 @@
   display: flex;
 
   .album-photo {
+    img {
+      width: 200px;
+      height: 200px;
+    }
     width: 200px;
     float: left;
   }

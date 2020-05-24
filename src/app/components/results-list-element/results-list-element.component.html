@@ -10,12 +10,38 @@
 
   <div class="info">
     <table>
-      <tr>Title: {{song._source.title}}</tr>
-      <tr>Author: {{song._source.author.name}}</tr>
-      <tr>Album: {{song._source.album.name}}</tr>
-      <tr>Date: {{song._source.date}}</tr>
-      <tr [textContent]="formatFeatsNames(song._source.feats)"></tr>
-      <tr [textContent]="formatGenres(song._source.genres)"></tr>
+      <tr>
+        <td>Title:</td>
+        <td><a href="song/{{song._id}}">{{song._source.title}}</a></td>
+      </tr>
+      <tr>
+        <td>Author:</td>
+        <td><a href="#">{{song._source.author.name}}</a></td>
+      </tr>
+      <tr>
+        <td>Album:</td>
+        <td><a href="#">{{song._source.album.name}}</a></td>
+      </tr>
+      <tr>
+        <td>Date:</td>
+        <td>{{song._source.date}}</td>
+      </tr>
+      <tr>
+        <td>Featuring:</td>
+        <td>
+          <ng-container *ngFor="let feat of song._source.feats">
+            <a href="#">{{feat.name}}</a>&nbsp;
+          </ng-container>
+        </td>
+      </tr>
+      <tr>
+        <td>Genres:</td>
+        <td>
+          <ng-container *ngFor="let genre of song._source.genres">
+            {{genre}}&nbsp;
+          </ng-container>
+        </td>
+      </tr>
     </table>
   </div>
 </div>

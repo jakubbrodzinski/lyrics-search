@@ -2,10 +2,10 @@
   <div>
     <ul class="breadcrumb">
       <li><a href="#">Home</a></li>
-      <li><a href="#">Genre</a></li>
-      <li><a href="#">Author</a></li>
-      <li><a href="#">Album</a></li>
-      <li>Song</li>
+      <li><a href="#">{{song.genres[0]}}</a></li>
+      <li><a href="#">{{song.author.name}}</a></li>
+      <li *ngIf="song.album.name !== ''"><a href="#">{{song.album.name}}</a></li>
+      <li>{{song.title}}</li>
     </ul>
   </div>
   <app-simple-search></app-simple-search>
@@ -13,12 +13,12 @@
 
 <div class="wrapper">
   <div class="box song-detail">
-    <h1>{{song.title}}</h1>
-    <h2 [textContent]="getArtistString(song.author, song.feats)">Artist and feats</h2>
+    <h1 id="song-title">{{song.title}}</h1>
+    <h3 [textContent]="getArtistString(song.author, song.feats)" style="margin-bottom: 0">Artist and feats</h3>
   </div>
   <div class="box song-lyrics">
     <pre>
-      {{song.lyrics}}
+{{song.lyrics}}
     </pre>
   </div>
   <div class="box music-map">
@@ -29,11 +29,41 @@
             [src]="musicMapURL()">
     </iframe>
   </div>
-  <div class="box album-info">
-    <!--<img [src]="coverImageUrl"
+  <div class="box album-info bg-main" style="margin-left: 8px">
+    <h1>About album</h1>
+    <div style="text-align: center; margin-bottom: 4px">
+      <img [src]="coverImageUrl"
            alt={{song.album.name}}
-           style="width: 200px">-->
-    <p>{{song.album.name}}</p>
+           style="width: 200px">
+    </div>
+
+    <ul class="details">
+      <li>
+        <mat-icon aria-hidden="false" aria-label="Album icon">album</mat-icon>
+        {{song.album.name}}
+      </li>
+      <li>
+        <mat-icon aria-hidden="false" aria-label="Album icon">music_note</mat-icon>
+        Genre: {{song.genres[0]}}
+      </li>
+    </ul>
+
+
+    <h1 style="margin-top: 16px">About artist</h1>
+    <ul class="details">
+      <li>
+        <mat-icon aria-hidden="false" aria-label="Album icon">person</mat-icon>
+        Artist name: {{song.author.name}}
+      </li>
+      <li>
+        <mat-icon aria-hidden="false" aria-label="Album icon">group</mat-icon>
+        Artist type: {{author.type}}
+      </li>
+      <li>
+        <mat-icon aria-hidden="false" aria-label="Album icon">star</mat-icon>
+        Rating: {{author.rating.value}} ({{author.rating["votes-count"]}})
+      </li>
+    </ul>
   </div>
 </div>
 

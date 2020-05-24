@@ -3,6 +3,29 @@
   margin-bottom: 12px;
 }
 
+#song-title {
+  margin-bottom: 2px;
+}
+
+
+
+ul.details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+
+  li {
+    display:  flex;
+    vertical-align: middle;
+    margin-bottom: 4px;
+
+    mat-icon {
+      padding-right: 8px;
+    }
+  }
+}
+
 ul.breadcrumb {
   padding: 10px 16px;
   list-style: none;
@@ -12,7 +35,6 @@ ul.breadcrumb {
 /* Display list items side by side */
 ul.breadcrumb li {
   display: inline;
-  font-size: 18px;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
@@ -37,13 +59,9 @@ ul.breadcrumb li a:hover {
 .wrapper {
   display: grid;
   grid-gap: 10px;
-  background-color: #fff;
-  color: #444;
 }
 
 .box {
-  background-color: #444;
-  color: #fff;
   border-radius: 5px;
   padding: 20px;
 }
@@ -59,12 +77,13 @@ ul.breadcrumb li a:hover {
 }
 
 .music-map {
-  grid-column: 4 ;
+  grid-column: 4;
   grid-row: 1 / 3;
 }
 
 .album-info {
-  grid-column: 1 ;
-  grid-row: 1 / 3 ;
+  grid-column: 1;
+  grid-row: 1 / 3;
 }
+
 

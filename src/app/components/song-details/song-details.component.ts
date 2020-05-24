@@ -3,6 +3,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
 import {NameIdEntity, Song} from "../../models/query-result";
 import {MusicBrainzService} from "../../services/music-brainz.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Author} from "../../models/music-brainz";
 
 @Component({
   selector: 'app-song-details',
@@ -15,23 +16,20 @@ export class SongDetailsComponent implements OnInit {
 
   song: Song;
   coverImageUrl: string;
+  author: Author;
 
   constructor(route: ActivatedRoute, private musicBrainzService: MusicBrainzService, private sanitizer: DomSanitizer) {
     console.log(route.snapshot.data.song)
     this.song = route.snapshot.data.song;
     this.coverImageUrl = this.getCoverImageUrl(this.song.album.id);
-    this.segmentSongLyrics(this.song.lyrics);
+
+    this.musicBrainzService.getAuthorDetails(this.song.author.id).subscribe(value => {
+      this.author = value;
+    });
   }
 
   ngOnInit(): void {
 
-  }
-
-  segmentSongLyrics(lyrics: string) {
-    let segments: string[] = [];
-    lyrics.split("\\n").forEach(l => console.log(l));
-
-    return segments;
   }
 
   getArtistString(author: NameIdEntity, feats: any[]) {

@@ -9,7 +9,7 @@ export interface Author {
 
 interface Rating {
   value: number;
-  votes_count: number;
+  'votes-count': number;
 }
 
 interface LifeSpan {

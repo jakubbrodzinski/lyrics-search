@@ -12,9 +12,9 @@
 </div>
 
 <div class="wrapper">
-  <div class="box song-detail">
-    <h1 id="song-title">{{song.title}}</h1>
-    <h3 [textContent]="getArtistString(song.author, song.feats)" style="margin-bottom: 0">Artist and feats</h3>
+  <div class="box song-detail" style="padding-bottom: 0;">
+    <h1 id="song-title" class="title-heading">{{song.title}}</h1>
+    <h3 class="subtitle-heading" [textContent]="getArtistString(song.author, song.feats)" style="margin-bottom: 0">Artist and feats</h3>
   </div>
   <div class="box song-lyrics">
     <pre>

@@ -12,23 +12,40 @@
 </div>
 <mat-grid-list cols="4" rowHeight="2:1">
   <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: lightblue">
-    Album info
+    <div>
+      <!--<img [src]="coverImageUrl"
+           alt={{song.album.name}}
+           style="width: 200px">-->
+    </div>
+    <div>
+      <p>{{song.album.name}}</p>
+
+    </div>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: indianred">
     Song details
     <h1>{{song.title}}</h1>
+    <h2 [textContent]="getArtistString(song.author, song.feats)">Artist and feats</h2>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: lightgreen">
-    Youtube
+
+  <mat-grid-tile [colspan]="1" [rowspan]="3" style="background-color: dimgray">
+    <iframe id="musicMapIframe"
+            title="Music Map"
+            width="300"
+            height="400"
+            [src]="musicMapURL()">
+    </iframe>
   </mat-grid-tile>
 
   <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: mediumpurple">
     About artist
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="2" style="background-color: orange">
-    Lyrics
+    <pre>
+      {{song.lyrics}}
+    </pre>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: dimgray">
-    Music map
-  </mat-grid-tile>
+
 </mat-grid-list>
+
+

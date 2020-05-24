@@ -33,3 +33,38 @@ ul.breadcrumb li a:hover {
   color: #01447e;
   text-decoration: underline;
 }
+
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+}
+
+.box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.song-detail {
+  grid-column: 2 / 4;
+  grid-row: 1;
+}
+
+.song-lyrics {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+
+.music-map {
+  grid-column: 4 ;
+  grid-row: 1 / 3;
+}
+
+.album-info {
+  grid-column: 1 ;
+  grid-row: 1 / 3 ;
+}
+

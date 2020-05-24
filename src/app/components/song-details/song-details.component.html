@@ -10,42 +10,31 @@
   </div>
   <app-simple-search></app-simple-search>
 </div>
-<mat-grid-list cols="4" rowHeight="2:1">
-  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: lightblue">
-    <div>
-      <!--<img [src]="coverImageUrl"
-           alt={{song.album.name}}
-           style="width: 200px">-->
-    </div>
-    <div>
-      <p>{{song.album.name}}</p>
 
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: indianred">
-    Song details
+<div class="wrapper">
+  <div class="box song-detail">
     <h1>{{song.title}}</h1>
     <h2 [textContent]="getArtistString(song.author, song.feats)">Artist and feats</h2>
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="1" [rowspan]="3" style="background-color: dimgray">
+  </div>
+  <div class="box song-lyrics">
+    <pre>
+      {{song.lyrics}}
+    </pre>
+  </div>
+  <div class="box music-map">
     <iframe id="musicMapIframe"
             title="Music Map"
             width="300"
             height="400"
             [src]="musicMapURL()">
     </iframe>
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="1" [rowspan]="1" style="background-color: mediumpurple">
-    About artist
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="2" [rowspan]="2" style="background-color: orange">
-    <pre>
-      {{song.lyrics}}
-    </pre>
-  </mat-grid-tile>
-
-</mat-grid-list>
+  </div>
+  <div class="box album-info">
+    <!--<img [src]="coverImageUrl"
+           alt={{song.album.name}}
+           style="width: 200px">-->
+    <p>{{song.album.name}}</p>
+  </div>
+</div>
 
 

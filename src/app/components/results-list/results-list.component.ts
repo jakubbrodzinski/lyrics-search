@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {QueryResult} from "../../models/query-result";
 import {Page} from "../../models/page";
 import {Direction, Field, Sort} from "../../models/sort";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-results-list',
@@ -21,18 +22,20 @@ export class ResultsListComponent implements OnInit, OnChanges {
   totalSize: number;
 
   @Output()
-  pagingEvent = new EventEmitter<Page>()
+  pagingEvent = new EventEmitter<Page>();
 
   @Output()
-  sortingEvent = new EventEmitter<Sort>()
+  sortingEvent = new EventEmitter<Sort>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   currentSort: Sort = {
     field: Field.SCORE,
     direction: Direction.DESC
-  }
+  };
 
-  pageSize: number = 10
-  currentPage: number = 1;
+  pageSize: number = 10;
+  currentPage: number = 0;
   possiblePages: number[] = [];
 
   constructor() {
@@ -41,15 +44,16 @@ export class ResultsListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.totalSize || changes.startSize || changes.startOffset) {
       this.pageSize = this.startSize || 10;
-      this.currentPage = (this.startOffset / this.pageSize) || 1;
+      this.currentPage = (this.startOffset / this.pageSize) || 0;
       this.recalculatePages();
     }
   }
 
   private recalculatePages() {
     let pages = [];
-    for (let p = 0; p < this.totalSize / this.pageSize; p++)
-      pages.push(p + 1);
+    for (let p = 0; p < this.totalSize / this.pageSize; p++) {
+      pages.push(p);
+    }
     this.possiblePages = pages;
   }
 
@@ -63,7 +67,7 @@ export class ResultsListComponent implements OnInit, OnChanges {
     } else if (this.currentSort.direction === Direction.ASC) {
       this.currentSort.direction = Direction.DESC;
     } else {
-      this.currentSort.field = Field.NONE
+      this.currentSort.field = Field.NONE;
     }
     this.sortingEvent.emit(this.currentSort);
   }
@@ -82,4 +86,22 @@ export class ResultsListComponent implements OnInit, OnChanges {
       this.pagingEvent.emit({size: this.pageSize, offset: page * this.pageSize});
     }
   }
+
+  handlePage(event: PageEvent) {
+    this.changePageSize(event.pageSize);
+    this.changePage(event.pageIndex);
+  }
+
+  syncPrimaryPaginator(event: PageEvent) {
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.page.emit(event);
+
+    this.handlePage(event);
+  }
+
+  getTotalSize() {
+    return this.totalSize;
+  }
+
 }

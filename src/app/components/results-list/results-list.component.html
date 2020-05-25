@@ -1,24 +1,42 @@
-<div>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</div>
-<div>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.GENRE)">Gatunek</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.AUTHOR)">Autor</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.ALBUM)">Album</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.TITLE)">Tytuł</button>
-  <button mat-raised-button type="button" (click)="sortBy(FieldSort.DATE)">Data</button>
-</div>
-<div>Current Page {{currentPage}} of {{possiblePages.length}} with size {{pageSize}}</div>
-<div>
-  <div>
-    <button mat-raised-button type="button" (click)="changePageSize(10)">10</button>
-    <button mat-raised-button type="button" (click)="changePageSize(25)">25</button>
-    <button mat-raised-button type="button" (click)="changePageSize(50)">50</button>
+<div class="result-list">
+
+  <div class="left-right">
+    <div class="left">
+      <mat-form-field>
+        <mat-label>Current Sort: by {{currentSort.field}} ({{currentSort.direction}})</mat-label>
+        <select #sortSelect matNativeControl (click)='sortBy(sortSelect.value)'>
+          <option [value]='FieldSort.SCORE'>Score</option>
+          <option [value]='FieldSort.GENRE'>Genre</option>
+          <option [value]="FieldSort.AUTHOR">Author</option>
+          <option [value]="FieldSort.ALBUM">Album</option>
+          <option [value]="FieldSort.TITLE">Title</option>
+          <option [value]="FieldSort.DATE">Date</option>
+        </select>
+      </mat-form-field>
+    </div>
+    <div class="right">
+      <mat-paginator #paginator [length]='getTotalSize()'
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 50]"
+                     (page)="handlePage($event)"
+                     showFirstLastButtons="true"
+                     style="background-color: #eeeeee">
+      </mat-paginator>
+    </div>
   </div>
-  <ng-container *ngFor="let pageIndex of possiblePages">
-    <button mat-raised-button type="button" (click)="changePage(pageIndex)">{{pageIndex}}</button>
-  </ng-container>
-</div>
-<div>
+
   <div *ngFor="let song of queryResults">
-    TITLE: {{song._source.title}}
+    <app-results-list-element [song]="song"></app-results-list-element>
+  </div>
+
+  <div class="right">
+    <mat-paginator [length]='paginator.length'
+                   [pageSize]='paginator.pageSize'
+                   [pageSizeOptions]='paginator.pageSizeOptions'
+                   [pageIndex]="paginator.pageIndex"
+                   (page)="syncPrimaryPaginator($event)"
+                   showFirstLastButtons="true"
+                   style="background-color: #eeeeee">
+    </mat-paginator>
   </div>
 </div>

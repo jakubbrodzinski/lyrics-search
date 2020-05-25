@@ -15,6 +15,8 @@ export class FacetChipsPickerComponent implements OnChanges {
   pickedChips: FacetEntity[] = [];
   availableChips: FacetEntity[] = [];
   @Input()
+  placeholder: string;
+  @Input()
   allAvailable: FacetEntity[];
   @Input()
   pickedOnStart: string[];
@@ -33,7 +35,7 @@ export class FacetChipsPickerComponent implements OnChanges {
       startWith(<string>null),
       debounceTime(500)
     );
-    const temp$ = this.refreshAutoComplete$.asObservable().pipe(tap(()=>console.log('something is happening')));
+    const temp$ = this.refreshAutoComplete$.asObservable().pipe(tap(() => console.log('something is happening')));
     this.filteredNotPickedFacets$ = combineLatest([debouncedFilterChange$, temp$]).pipe(
       map(arr => arr[0]),
       map<string, FacetEntity[]>((filter: string | null) => {
@@ -61,7 +63,7 @@ export class FacetChipsPickerComponent implements OnChanges {
       })
       this.pickedChips = picked;
       this.availableChips = available;
-    }else if(this.allAvailable){
+    } else if (this.allAvailable) {
       this.availableChips = this.allAvailable.slice();
     }
 

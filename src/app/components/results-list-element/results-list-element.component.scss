@@ -1,0 +1,24 @@
+.song-result {
+  margin: 2.5% 0;
+  padding: 2.5%;
+  background: #eeeeee;
+  display: flex;
+
+  .album-photo {
+    img {
+      width: 200px;
+      height: 200px;
+    }
+    width: 200px;
+    float: left;
+  }
+
+  .info {
+    padding: 2.5%;
+    float: right;
+    width: 100%;
+  }
+}
+
+
+

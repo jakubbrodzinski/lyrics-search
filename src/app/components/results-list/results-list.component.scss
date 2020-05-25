@@ -1,0 +1,24 @@
+.result-list {
+  margin: 0 2.5%;
+  padding: 0 2.5%;
+
+  .left-right {
+    margin: 0 0 5% 0;
+    background-color: #eeeeee;
+    display: flex;
+
+    .left {
+      padding: 2.5%;
+      //background-color: #eeeeee;
+      float: left;
+      width: 30%;
+    }
+
+    .right {
+      //background-color: #eeeeee;
+      float: right;
+      width: 70%;
+    }
+  }
+}
+

@@ -1,0 +1,26 @@
+<div class="content">
+  <div class="left">
+    <h1>{{albumName}}</h1>
+    <h2>by <a href="author?authors={{authorName}}">{{authorName}}</a></h2>
+    <div class="album-photo">
+      <ng-container *ngIf="albumURL; else stockImage">
+        <img [src]="albumURL" (error)="changeSource($event)">
+      </ng-container>
+      <ng-template #stockImage>
+        <img src="assets/no-image-available.png">
+      </ng-template>
+    </div>
+  </div>
+  <div class="right">
+    <mat-form-field class=query-form (keyup.enter)="updateParamsAndSearch()">
+      <mat-label>Query</mat-label>
+      <input matInput placeholder="Query" [formControl]="queryFormControl">
+    </mat-form-field>
+
+    <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
+                      [startOffset]="startOffset" [startSize]="startPageSize"
+                      (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"
+    ></app-results-list>
+  </div>
+</div>
+

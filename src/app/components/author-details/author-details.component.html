@@ -1,0 +1,42 @@
+<div class="content">
+  <div class="left">
+    <h1>{{authorName}}</h1>
+    <ng-container *ngIf="author">
+      <ng-container *ngIf="author.aliases.length > 0">
+        <ng-container *ngFor="let alias of author.aliases">
+          <h2>{{alias.name}}</h2>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="author.type">
+        <h2>Type: {{author.type}}</h2>
+      </ng-container>
+      <ng-container *ngIf="author.gender">
+        <h2>Gender: {{author.gender}}</h2>
+      </ng-container>
+      <ng-container *ngIf="author.lifespan">
+        <h2>Lifespan: {{author.lifespan}}</h2>
+      </ng-container>
+      <ng-container *ngIf="author.area.name">
+        <h2>Area: {{author.area.name}}</h2>
+      </ng-container>
+      <ng-container *ngIf="author.rating.value">
+        <h2>Rating: {{author.rating.value}}
+          <ng-container *ngIf="author.rating['votes-count']">({{author.rating["votes-count"]}} votes)</ng-container>
+        </h2>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="right">
+    <mat-form-field class=query-form (keyup.enter)="updateParamsAndSearch()">
+      <mat-label>Query</mat-label>
+      <input matInput placeholder="Query" [formControl]="queryFormControl">
+    </mat-form-field>
+
+    <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
+                      [startOffset]="startOffset" [startSize]="startPageSize"
+                      (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"
+    ></app-results-list>
+  </div>
+</div>
+

@@ -1,0 +1,53 @@
+<div class="song-result">
+  <a class="album-photo" [routerLink]="'/song/'+song._id">
+    <ng-container *ngIf="albumURL; else stockImage">
+      <img [src]="albumURL" alt={{song._source.album.name}} (error)="changeSource($event)">
+    </ng-container>
+    <ng-template #stockImage>
+      <img src="assets/no-image-available.png">
+    </ng-template>
+  </a>
+
+  <div class="info">
+    <table>
+      <tr>
+        <td>Title:</td>
+        <td><a [routerLink]="'/song/'+song._id">{{song._source.title}}</a></td>
+      </tr>
+      <tr>
+        <td>Author:</td>
+        <td><a routerLink="/author" [queryParams]="{authors: song._source.author.name}">{{song._source.author.name}}</a></td>
+      </tr>
+      <tr>
+        <td>Album:</td>
+        <td><a routerLink="/album" [queryParams]="{albums: song._source.album.name}">{{song._source.album.name}}</a></td>
+      </tr>
+      <ng-container *ngIf="song._source.date">
+        <tr>
+          <td>Date:</td>
+          <td>{{song._source.date}}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="song._source.feats.length > 0">
+        <tr>
+          <td>Featuring:</td>
+          <td>
+            <ng-container *ngFor="let feat of song._source.feats">
+              <a href="author?authors={{feat.name}}">{{feat.name}}</a>&nbsp;
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="song._source.genres.length > 0">
+        <tr>
+          <td>Genres:</td>
+          <td>
+            <ng-container *ngFor="let genre of song._source.genres">
+              {{genre}}&nbsp;
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>

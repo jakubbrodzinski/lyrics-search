@@ -14,16 +14,16 @@ export class MusicBrainzService {
   }
 
   // check https://musicbrainz.org/doc/Artist
-  getAuthorDetails(authorId: string) : Observable<Author>{
+  getAuthorDetails(authorId: string): Observable<Author> {
     const httpParams = new HttpParams()
       .set('inc', 'aliases+ratings')
       .set('fmt', 'json');
 
-    return this.http.get<Author>(`${this.ARTIST_DETAILS_URL}/${authorId}`, {params: httpParams})
+    return this.http.get<Author>(`${this.ARTIST_DETAILS_URL}/${authorId}`, {params: httpParams});
   }
 
   // check https://musicbrainz.org/doc/Cover_Art_Archive/API
-  getCoverImageURL(albumId: string) : string{
-    return `${this.COVER_ARCHIVE_URL}/${albumId}/front-500`;
+  getCoverImageURL(albumId: string): string {
+    return `${this.COVER_ARCHIVE_URL}/${albumId}/front-250`;
   }
 }

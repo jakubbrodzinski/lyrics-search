@@ -157,6 +157,6 @@ export class AdvancedSearchComponent implements OnInit {
       relativeTo: this.route,
       queryParams: newParams,
       queryParamsHandling: strategy
-    })
+    });
   }
 }

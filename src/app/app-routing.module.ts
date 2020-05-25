@@ -9,6 +9,8 @@ import {GenresResolver} from "./resolvers/genres-resolver";
 import {DateResolver} from "./resolvers/date-resolver";
 import {SongDetailsComponent} from "./components/song-details/song-details.component";
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
+import {AlbumDetailsComponent} from "./components/album-details/album-details.component";
+import {AuthorDetailsComponent} from "./components/author-details/author-details.component";
 
 
 const routes: Routes = [
@@ -31,6 +33,22 @@ const routes: Routes = [
     resolve: {
       song: SongDetailsResolver
     }
+  },
+  {
+    path: 'album',
+    component: AlbumDetailsComponent,
+    resolve: {
+      albumSongs: AdvancedSearchResolver
+    },
+    runGuardsAndResolvers: 'pathParamsOrQueryParamsChange'
+  },
+  {
+    path: 'author',
+    component: AuthorDetailsComponent,
+    resolve: {
+      authorSongs: AdvancedSearchResolver
+    },
+    runGuardsAndResolvers: 'pathParamsOrQueryParamsChange'
   }
 ];
 

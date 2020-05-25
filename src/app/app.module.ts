@@ -30,6 +30,7 @@ import {AlbumDetailsComponent} from './components/album-details/album-details.co
 import {AuthorDetailsComponent} from './components/author-details/author-details.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     SongDetailsComponent,
     ResultsListElementComponent,
     AlbumDetailsComponent,
-    AuthorDetailsComponent
+    AuthorDetailsComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

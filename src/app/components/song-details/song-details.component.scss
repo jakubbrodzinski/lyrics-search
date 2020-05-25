@@ -1,6 +1,7 @@
-#top-nav {
+.content {
   display: flex;
-  margin-bottom: 12px;
+  margin: 1.5% auto 5%;
+  max-width: 90%;
 }
 
 #song-title {
@@ -26,7 +27,7 @@ ul.details {
 
 
   li {
-    display:  flex;
+    display: flex;
     vertical-align: middle;
     margin-bottom: 4px;
 
@@ -36,35 +37,7 @@ ul.details {
   }
 }
 
-ul.breadcrumb {
-  padding: 10px 16px;
-  list-style: none;
-  background: #eeeeee;
-}
 
-/* Display list items side by side */
-ul.breadcrumb li {
-  display: inline;
-}
-
-/* Add a slash symbol (/) before/behind each list item */
-ul.breadcrumb li+li:before {
-  padding: 8px;
-  color: black;
-  content: "/\00a0";
-}
-
-/* Add a color to all links inside the list */
-ul.breadcrumb li a {
-  color: #0275d8;
-  text-decoration: none;
-}
-
-/* Add a color on mouse-over */
-ul.breadcrumb li a:hover {
-  color: #01447e;
-  text-decoration: underline;
-}
 
 .wrapper {
   display: grid;
@@ -74,7 +47,7 @@ ul.breadcrumb li a:hover {
 
 .box {
   border-radius: 5px;
-  padding: 20px;
+  padding: 1%;
 }
 
 .song-detail {
@@ -88,8 +61,7 @@ ul.breadcrumb li a:hover {
 }
 
 .music-map {
-  grid-column: 4;
-  grid-row: 1 / 3;
+  width: 100%;
 }
 
 .album-info {

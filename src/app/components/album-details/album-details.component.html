@@ -1,7 +1,23 @@
+<div id="top-nav">
+  <div style="margin-right: 18px">
+    <ul class="breadcrumb">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/search">Advanced search</a></li>
+      <li><a routerLink="/author" [queryParams]="{authors: authorName}">{{authorName}}</a></li>
+      <li><a routerLink="/album" [queryParams]="{albums: albumName}">{{albumName}}</a></li>
+    </ul>
+  </div>
+  <app-simple-search></app-simple-search>
+</div>
+
 <div class="content">
   <div class="left">
-    <h1>{{albumName}}</h1>
-    <h2>by <a routerLink="/author" [queryParams]="{authors: authorName}">{{authorName}}</a></h2>
+    <h1>
+      <mat-icon aria-hidden="false" aria-label="Album icon">album</mat-icon>
+      {{albumName}}</h1>
+    <h2>
+      <mat-icon aria-hidden="false" aria-label="Album icon">person</mat-icon>&nbsp;
+      <a routerLink="/author" [queryParams]="{authors: authorName}">{{authorName}}</a></h2>
     <div class="album-photo">
       <ng-container *ngIf="albumURL; else stockImage">
         <img [src]="albumURL" (error)="changeSource($event)">
@@ -12,8 +28,8 @@
     </div>
   </div>
   <div class="right">
-    <mat-form-field class=query-form (keyup.enter)="updateParamsAndSearch()">
-      <mat-label>Query</mat-label>
+    <mat-form-field class="query-90" (keyup.enter)="updateParamsAndSearch()">
+      <mat-label>Query Album's Lyrics</mat-label>
       <input matInput placeholder="Query" [formControl]="queryFormControl">
     </mat-form-field>
 

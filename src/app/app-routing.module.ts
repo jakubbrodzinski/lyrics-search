@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SimpleSearchComponent} from "./components/simple-search/simple-search.component";
 import {AdvancedSearchComponent} from "./components/advanced-search/advanced-search.component";
 import {AdvancedSearchResolver} from "./resolvers/advanced-search-resolver";
 import {AuthorsResolver} from "./resolvers/authors-resolver";
@@ -11,10 +10,11 @@ import {SongDetailsComponent} from "./components/song-details/song-details.compo
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
 import {AlbumDetailsComponent} from "./components/album-details/album-details.component";
 import {AuthorDetailsComponent} from "./components/author-details/author-details.component";
+import {HomePageComponent} from "./components/home-page/home-page.component";
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', component: SimpleSearchComponent},
+  {path: '', pathMatch: 'full', component: HomePageComponent},
   {
     path: 'search',
     component: AdvancedSearchComponent,

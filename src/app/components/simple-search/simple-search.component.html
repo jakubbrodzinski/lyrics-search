@@ -1,13 +1,11 @@
-<div>
-  <form [formGroup]="searchFormGroup" action="#">
-    <mat-form-field class=query-form>
-      <mat-label>Query LyricsSearch</mat-label>
-      <input matInput placeholder="Query" formControlName="query" #queryInput>
-      <mat-icon matSuffix>search</mat-icon>
-      <mat-error *ngIf="searchFormGroup.get('query').hasError('required')">
-        Query is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <button mat-raised-button (click)="searchClick()" type="submit">Search</button>
-  </form>
-</div>
+<form [formGroup]="searchFormGroup" action="#">
+  <mat-form-field class=query-form>
+    <mat-label>Query LyricsSearch</mat-label>
+    <input matInput placeholder="Query" formControlName="query" #queryInput>
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-error *ngIf="searchFormGroup.get('query').hasError('required')">
+      Query is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button (click)="searchClick()" type="submit">Search</button>
+</form>

@@ -1,8 +1,84 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .bg-main {
   background-color: #eeeeee;
+}
+
+.content {
+  display: flex;
+  margin: 5% auto 5%;
+  max-width: 90%;
+}
+
+.left {
+  width: 30%;
+  background: #eeeeee;
+  padding: 5%;
+  float: left;
+}
+
+.right {
+  width: 70%;
+  float: right;
+}
+
+.center-div {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.query-90 {
+  width: 90%;
+  align-self: center;
+  padding: 2.5% 5%;
+}
+
+#top-nav {
+  display: flex;
+  margin: 5% auto 0 auto;
+  width: 90%;
+}
+
+//breadcrumbs
+
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background: #eeeeee;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li + li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
 }

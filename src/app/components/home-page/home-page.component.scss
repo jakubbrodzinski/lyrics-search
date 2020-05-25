@@ -1,0 +1,11 @@
+.center-all {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: url("/assets/LyricsSearch2.png") no-repeat center;
+  background-size: cover;
+}

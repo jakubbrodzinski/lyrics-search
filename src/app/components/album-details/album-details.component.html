@@ -12,6 +12,11 @@
     </div>
   </div>
   <div class="right">
+    <mat-form-field class=query-form (keyup.enter)="updateParamsAndSearch()">
+      <mat-label>Query</mat-label>
+      <input matInput placeholder="Query" [formControl]="queryFormControl">
+    </mat-form-field>
+
     <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"
                       [startOffset]="startOffset" [startSize]="startPageSize"
                       (pagingEvent)="onPageChange($event)" (sortingEvent)="onSortChange($event)"

@@ -3,6 +3,10 @@ import {QueryResult} from "../../models/query-result";
 import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {Page} from "../../models/page";
 import {Field, Sort} from "../../models/sort";
+import {Author} from "../../models/music-brainz";
+import {MusicBrainzService} from "../../services/music-brainz.service";
+import {QueryParams} from "../../models/query-params";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-author-details',
@@ -12,15 +16,25 @@ import {Field, Sort} from "../../models/sort";
 export class AuthorDetailsComponent implements OnInit {
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
+  queryFormControl: FormControl = new FormControl();
+
 
   startOffset: number;
   startPageSize: number;
 
+  author: Author = null;
+  authorName: string = null;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-    console.log(route.snapshot.data)
+  constructor(private route: ActivatedRoute, private router: Router, private musicBrainzService: MusicBrainzService) {
     this.queryResults = route.snapshot.data.authorSongs.results;
     this.queryResultsCount = this.queryResults.length;
+    this.authorName = route.snapshot.queryParamMap.get('authors');
+
+    if (this.queryResults.length > 0) {
+      musicBrainzService.getAuthorDetails(this.queryResults[0]._source.author.id).subscribe(value => {
+        this.author = value;
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -59,6 +73,14 @@ export class AuthorDetailsComponent implements OnInit {
       queryParams: newParams,
       queryParamsHandling: strategy
     });
+  }
+
+  updateParamsAndSearch() {
+    const searchParams = {};
+    searchParams[QueryParams.QUERY] = this.queryFormControl.value;
+    searchParams[QueryParams.AUTHORS] = this.authorName;
+
+    return this.changeQueryParams(searchParams, '');
   }
 
 }

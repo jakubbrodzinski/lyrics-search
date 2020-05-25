@@ -4,6 +4,8 @@ import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {QueryResult} from "../../models/query-result";
 import {Page} from "../../models/page";
 import {Field, Sort} from "../../models/sort";
+import {QueryParams} from "../../models/query-params";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-album-details',
@@ -13,6 +15,7 @@ import {Field, Sort} from "../../models/sort";
 export class AlbumDetailsComponent implements OnChanges, OnInit {
   queryResults: QueryResult[] = [];
   queryResultsCount: number = 0;
+  queryFormControl: FormControl = new FormControl();
 
   startOffset: number;
   startPageSize: number;
@@ -86,6 +89,14 @@ export class AlbumDetailsComponent implements OnChanges, OnInit {
       queryParams: newParams,
       queryParamsHandling: strategy
     });
+  }
+
+  updateParamsAndSearch() {
+    const searchParams = {};
+    searchParams[QueryParams.QUERY] = this.queryFormControl.value;
+    searchParams[QueryParams.ALBUMS] = this.albumName;
+
+    return this.changeQueryParams(searchParams, '');
   }
 
 }

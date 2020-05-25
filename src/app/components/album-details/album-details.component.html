@@ -1,7 +1,7 @@
 <div class="content">
   <div class="left">
     <h1>{{albumName}}</h1>
-    <h2>by <a href="author?authors={{authorName}}">{{authorName}}</a></h2>
+    <h2>by <a routerLink="/author" [queryParams]="{authors: authorName}">{{authorName}}</a></h2>
     <div class="album-photo">
       <ng-container *ngIf="albumURL; else stockImage">
         <img [src]="albumURL" (error)="changeSource($event)">

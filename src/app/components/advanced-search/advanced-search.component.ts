@@ -100,14 +100,24 @@ export class AdvancedSearchComponent implements OnInit {
     searchParams[QueryParams.QUERY] = this.queryFormControl.value;
     if (this.pickedAlbums.length > 0)
       searchParams[QueryParams.ALBUMS] = this.pickedAlbums;
+    else
+      searchParams[QueryParams.ALBUMS] = null;
     if (this.pickedAuthors.length > 0)
       searchParams[QueryParams.AUTHORS] = this.pickedAuthors;
+    else
+      searchParams[QueryParams.AUTHORS] = null;
     if (this.pickedGenres.length > 0)
       searchParams[QueryParams.GENRES] = this.pickedGenres;
+    else
+      searchParams[QueryParams.GENRES] = null;
     if (this.fromDate)
       searchParams[QueryParams.FROM] = this.fromDate;
+    else
+      searchParams[QueryParams.FROM] = null;
     if (this.toDate)
       searchParams[QueryParams.TO] = this.toDate;
+    else
+      searchParams[QueryParams.TO] = null;
 
     return this.changeQueryParams(searchParams, 'merge');
   }

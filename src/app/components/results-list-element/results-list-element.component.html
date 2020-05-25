@@ -33,7 +33,7 @@
           <td>Featuring:</td>
           <td>
             <ng-container *ngFor="let feat of song._source.feats">
-              <a href="author?authors={{feat.name}}">{{feat.name}}</a>&nbsp;
+              <a routerLink="/author" [queryParams]="{authors: feat.name}">{{feat.name}}</a>&nbsp;
             </ng-container>
           </td>
         </tr>

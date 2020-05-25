@@ -38,7 +38,6 @@ ul.details {
 }
 
 
-
 .wrapper {
   display: grid;
   grid-gap: 10px;
@@ -51,13 +50,11 @@ ul.details {
 }
 
 .song-detail {
-  grid-column: 2 / 4;
-  grid-row: 1;
+  margin: 0 5% 5% 5%;
 }
 
 .song-lyrics {
-  grid-column: 2 / 4;
-  grid-row: 2;
+  margin: 0 5% 5% 5%;
 }
 
 .music-map {

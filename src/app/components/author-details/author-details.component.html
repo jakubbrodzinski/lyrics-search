@@ -21,7 +21,7 @@
       </ng-container>
       <ng-container *ngIf="author.rating.value">
         <h2>Rating: {{author.rating.value}}
-          <ng-container *ngIf="author.rating.votes_count">({{author.rating.votes_count}} votes)</ng-container>
+          <ng-container *ngIf="author.rating['votes-count']">({{author.rating["votes-count"]}} votes)</ng-container>
         </h2>
       </ng-container>
     </ng-container>

@@ -1,26 +1,26 @@
 <div class="song-result">
-  <div class="album-photo">
+  <a class="album-photo" [routerLink]="'/song/'+song._id">
     <ng-container *ngIf="albumURL; else stockImage">
       <img [src]="albumURL" alt={{song._source.album.name}} (error)="changeSource($event)">
     </ng-container>
     <ng-template #stockImage>
       <img src="assets/no-image-available.png">
     </ng-template>
-  </div>
+  </a>
 
   <div class="info">
     <table>
       <tr>
         <td>Title:</td>
-        <td><a href="song/{{song._id}}">{{song._source.title}}</a></td>
+        <td><a [routerLink]="'/song/'+song._id">{{song._source.title}}</a></td>
       </tr>
       <tr>
         <td>Author:</td>
-        <td><a href="author?authors={{song._source.author.name}}">{{song._source.author.name}}</a></td>
+        <td><a routerLink="/author" [queryParams]="{authors: song._source.author.name}">{{song._source.author.name}}</a></td>
       </tr>
       <tr>
         <td>Album:</td>
-        <td><a href="album?albums={{song._source.album.name}}">{{song._source.album.name}}</a></td>
+        <td><a routerLink="/album" [queryParams]="{albums: song._source.album.name}">{{song._source.album.name}}</a></td>
       </tr>
       <ng-container *ngIf="song._source.date">
         <tr>

@@ -23,13 +23,13 @@
     <div class="center-div">
       From:
       <app-date-facet #fromSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="false"
-                      (dateChange)="onMinDateChange($event)" [startValue]="onStartMinDate"></app-date-facet>
+                      (dateChange)="onMinDateChange($event)" [startValue]="startFromDate"></app-date-facet>
     </div>
 
     <div>
       To:
       <app-date-facet #toSlider [minDate]="minDate" [maxDate]="maxDate" [inverted]="true"
-                      (dateChange)="onMaxDateChange($event)" [startValue]="onStartMaxDate"></app-date-facet>
+                      (dateChange)="onMaxDateChange($event)" [startValue]="startToDate"></app-date-facet>
     </div>
 
     <div class="center-div" align="center">

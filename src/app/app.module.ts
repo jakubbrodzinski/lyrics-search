@@ -26,8 +26,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import {ResultsListElementComponent} from './components/results-list-element/results-list-element.component';
 import {SongDetailsComponent} from './components/song-details/song-details.component';
 import {SongDetailsResolver} from "./resolvers/song-details-resolver";
-import { AlbumDetailsComponent } from './components/album-details/album-details.component';
-import { AuthorDetailsComponent } from './components/author-details/author-details.component';
+import {AlbumDetailsComponent} from './components/album-details/album-details.component';
+import {AuthorDetailsComponent} from './components/author-details/author-details.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatPaginatorModule} from "@angular/material/paginator";
 
@@ -39,9 +39,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     SimpleSearchComponent,
     ResultsListComponent,
     DateFacetComponent,
-    ResultsListElementComponent,
-    DateFacetComponent,
-    SongDetailsComponent
+    SongDetailsComponent,
     ResultsListElementComponent,
     AlbumDetailsComponent,
     AuthorDetailsComponent

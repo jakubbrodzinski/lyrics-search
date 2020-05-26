@@ -10,3 +10,15 @@
     align-content: center;
   }
 }
+
+.search-input-flexbox {
+  display: flex;
+  margin: 10px 20px;
+  align-items: center;
+  .big {
+    flex-grow: 5
+  }
+  .small {
+    width: 100px;
+  }
+}

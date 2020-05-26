@@ -54,10 +54,17 @@
   </div>
 
   <div class="right">
-    <mat-form-field class="query-90" (keyup.enter)="updateParamsAndSearch()">
-      <mat-label>Query Author's Lyrics</mat-label>
-      <input matInput placeholder="Query" [formControl]="queryFormControl">
-    </mat-form-field>
+    <div class="search-input-flexbox">
+      <div class="big">
+        <mat-form-field class="query-90" (keyup.enter)="updateParamsAndSearch()">
+          <mat-label>Query Author's Lyrics</mat-label>
+          <input matInput placeholder="Query" [formControl]="queryFormControl">
+        </mat-form-field>
+      </div>
+      <div class="small">
+        <button mat-raised-button color="accent" (click)="updateParamsAndSearch()">Search</button>
+      </div>
+    </div>
 
 
     <app-results-list [queryResults]="queryResults" [totalSize]="queryResultsCount"

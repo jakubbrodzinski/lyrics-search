@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {MatCheckboxChange} from "@angular/material/checkbox";
-import {MatSlider} from "@angular/material/slider";
 
 @Component({
   selector: 'app-date-facet',
@@ -18,6 +17,8 @@ export class DateFacetComponent implements OnChanges {
   inverted: boolean;
   @Output()
   dateChange = new EventEmitter<string>();
+
+  currentValue: string;
 
   disabled: boolean = true;
   minYear: number;
@@ -41,10 +42,13 @@ export class DateFacetComponent implements OnChanges {
       this.maxYear = Number(this.maxDate.substr(0, 4))
       this.maxMonth = Number(this.maxDate.substr(5, 2))
       this.calculateMaxAsNumber();
-      if (this.startValue)
+      if (this.startValue) {
+        this.currentValue = this.startValue;
         this.loadStartValue();
+      }
     } else {
       this.disabled = true;
+      this.currentValue = null;
       this.dateChange.emit(null);
       this.formatFunction = (_) => '0000-00';
     }
@@ -94,13 +98,15 @@ export class DateFacetComponent implements OnChanges {
     this.disabled = !$event.checked
     if (this.disabled) {
       this.sliderValue = 0;
+      this.currentValue = null;
       this.dateChange.emit(null);
     }
   }
 
   onDateChange($event: number) {
     if (!this.disabled && $event > 0) {
-      this.dateChange.emit(this.formatFunction($event));
+      this.currentValue = this.formatFunction($event);
+      this.dateChange.emit(this.currentValue);
     }
   }
 }

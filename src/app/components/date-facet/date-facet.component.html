@@ -3,6 +3,9 @@
     <mat-checkbox (change)="onCheckboxChange($event)" [checked]="!disabled"
                   [disabled]="!minDate || !maxDate"></mat-checkbox>
   </div>
+  <div *ngIf="currentValue" class="middle">
+    {{currentValue}}
+  </div>
   <div class="right">
     <mat-slider #matSlider [style]="'width:90%'" [disabled]="disabled" [min]="minAsNumber" [max]="maxAsNumber"
                 [displayWith]="formatFunction"

@@ -69,13 +69,15 @@ export class ResultsListComponent implements OnInit, OnChanges {
     } else {
       this.currentSort.field = Field.NONE;
     }
+    this.currentPage = 0;
+    this.paginator.pageIndex = 0;
     this.sortingEvent.emit(this.currentSort);
   }
 
   changePageSize(size: number) {
     if (this.pageSize !== size) {
       this.pageSize = size;
-      this.pagingEvent.emit({size: this.pageSize, offset: 0});
+      this.pagingEvent.emit({size: this.pageSize, offset: null});
       this.recalculatePages();
     }
   }

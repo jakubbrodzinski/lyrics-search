@@ -146,12 +146,12 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   onSortChange(sortChange: Sort) {
-    if (sortChange.field === Field.NONE) {
-      const qParams = {field: null, direction: null};
-      return this.changeQueryParams(qParams, 'merge');
-    } else {
-      return this.changeQueryParams(sortChange, 'merge');
+    const qParams = {
+      offset : null,
+      field: sortChange.field,
+      direction: sortChange.direction
     }
+    return this.changeQueryParams(qParams, 'merge');
   }
 
   onMinDateChange($event: string) {
